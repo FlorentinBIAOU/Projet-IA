@@ -1,0 +1,11 @@
+indicateur,valeur,ce que cela mesure
+Nombre d'envois,1599.0,livraisons sur l'horizon
+Nombre de camions,1604.0,camions necessaires
+Envois par semaine,266.5,rythme de livraison actuel
+Cout total (EUR),143422.43,ce que coute l'horizon
+Cout moyen par semaine (EUR),23903.74,depense hebdomadaire
+Cout par tonne (EUR/t),88.81,efficacite du transport
+Cout moyen par envoi (EUR),89.7,prix d'une livraison
+Remplissage median (%),1.32,remplissage typique d'un camion
+Remplissage moyen (%),3.92,remplissage moyen
+Part des camions sous 10 % (%),92.9,camions presque vides
