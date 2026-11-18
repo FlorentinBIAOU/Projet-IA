@@ -1,0 +1,6 @@
+etape,lignes_avant,lignes_apres,retirees_ou_marquees,regle
+charger,5728,5728,0,-
+retirer quantite 0,5728,4769,959,H1
+retirer dates fourre-tout,4769,4390,379,H9
+completer poids/volume,4390,4390,250,H4
+enrichir,4390,4390,5,H2/H3/H6/H11
