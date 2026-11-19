@@ -1,0 +1,181 @@
+supplier_id,plant,distance,envois_sem_actuels,profil,periode,jours,livraisons,camions,remplissage_moyen_%,cout_actuel,cout_optimise,economie_eur,economie_%
+SUP_00118,PLT_001,100.0,4.83,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,13.06,3210.51,1453.93,1756.58,54.7
+SUP_00024,PLT_001,64.0,3.0,1 / semaine : lundi,1.0,lundi,6.0,6.0,26.42,2408.9,1403.25,1005.64,41.7
+SUP_00045,PLT_001,95.0,3.83,1 / semaine : mardi,1.0,mardi,6.0,6.0,10.27,2482.47,1326.15,1156.32,46.6
+SUP_00144,PLT_001,38.0,3.33,1 / semaine : lundi,1.0,lundi,6.0,6.0,47.22,3240.69,1283.49,1957.2,60.4
+SUP_00136,PLT_001,59.0,2.5,1 / semaine : mercredi,1.0,mercredi,5.0,5.0,9.53,1516.61,950.06,566.55,37.4
+SUP_00148,PLT_001,68.0,2.33,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,6.33,1347.67,936.32,411.34,30.5
+SUP_00073,PLT_001,48.0,2.33,1 / semaine : lundi,1.0,lundi,6.0,6.0,8.42,1479.3,912.95,566.35,38.3
+SUP_00055,PLT_001,68.0,3.17,"1 semaine sur 2 (semaine 1) : lundi, jeudi",2.0,"lundi,jeudi",6.0,6.0,6.61,1370.96,905.94,465.02,33.9
+SUP_00060,PLT_001,69.0,4.5,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,5.55,1893.23,862.14,1031.09,54.5
+SUP_00051,PLT_001,25.0,2.17,1 / semaine : mercredi,1.0,mercredi,5.0,5.0,36.63,1730.08,810.57,919.51,53.1
+SUP_00129,PLT_001,84.0,1.17,1 / semaine : mardi,1.0,mardi,5.0,5.0,5.4,906.99,787.19,119.8,13.2
+SUP_00107,PLT_001,9.0,4.83,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,7.78,1468.88,767.95,700.94,47.7
+SUP_00057,PLT_001,108.0,2.0,1 / semaine : mercredi,1.0,mercredi,6.0,6.0,2.5,951.36,675.66,275.7,29.0
+SUP_00113,PLT_001,37.0,1.83,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,4.23,816.16,625.86,190.3,23.3
+SUP_00091,PLT_001,22.0,2.67,1 / semaine : mardi,1.0,mardi,6.0,6.0,4.9,894.47,569.02,325.45,36.4
+SUP_00062,PLT_001,96.0,0.33,1 / semaine : jeudi,1.0,jeudi,2.0,2.0,18.33,561.16,561.16,0.0,0.0
+SUP_00053,PLT_001,26.0,3.83,1 / semaine : mardi,1.0,mardi,6.0,6.0,3.91,899.29,484.39,414.91,46.1
+SUP_00035,PLT_001,76.0,1.83,1 / semaine : mardi,1.0,mardi,4.0,4.0,3.22,816.89,480.46,336.43,41.2
+SUP_00052,PLT_001,126.0,3.33,1 / semaine : lundi,1.0,lundi,6.0,6.0,0.89,978.5,479.77,498.73,51.0
+SUP_00005,PLT_001,46.0,0.5,1 / semaine : jeudi,1.0,jeudi,3.0,3.0,8.51,476.49,476.49,0.0,0.0
+SUP_00058,PLT_001,33.0,1.5,"1 semaine sur 2 (semaine 1) : lundi, jeudi",2.0,"lundi,jeudi",4.0,4.0,4.12,621.49,435.81,185.68,29.9
+SUP_00037,PLT_001,69.0,1.17,"1 semaine sur 2 (semaine 1) : mercredi, vendredi",2.0,"mercredi,vendredi",4.0,4.0,3.15,595.4,434.72,160.68,27.0
+SUP_00102,PLT_001,62.0,4.17,1 / semaine : lundi,1.0,lundi,6.0,6.0,1.59,1112.6,434.11,678.49,61.0
+SUP_00026,PLT_001,47.0,0.83,1 semaine sur 2 (semaine 1) : vendredi,2.0,vendredi,3.0,3.0,7.17,589.56,430.91,158.65,26.9
+SUP_00014,PLT_001,54.0,3.0,1 / semaine : lundi,1.0,lundi,6.0,6.0,1.4,795.42,423.37,372.04,46.8
+SUP_00080,PLT_001,40.0,2.33,"1 semaine sur 2 (semaine 1) : mardi, jeudi",2.0,"mardi,jeudi",6.0,6.0,1.98,634.94,414.42,220.52,34.7
+SUP_00152,PLT_001,57.0,1.17,1 / semaine : mardi,1.0,mardi,4.0,4.0,1.79,453.48,333.88,119.6,26.4
+SUP_00095,PLT_001,66.0,1.33,1 / semaine : mercredi,1.0,mercredi,5.0,5.0,1.01,425.89,330.47,95.41,22.4
+SUP_00038,PLT_001,72.0,4.0,1 / semaine : lundi,1.0,lundi,6.0,6.0,0.66,798.86,292.11,506.75,63.4
+SUP_00154,PLT_001,127.0,0.67,"2 / semaine : jeudi, vendredi",1.0,"jeudi,vendredi",4.0,4.0,0.78,277.2,277.2,0.0,0.0
+SUP_00003,PLT_001,83.0,1.17,1 / semaine : mardi,1.0,mardi,4.0,4.0,0.73,340.85,258.97,81.88,24.0
+SUP_00081,PLT_001,143.0,0.5,1 / semaine : jeudi,1.0,jeudi,2.0,2.0,1.6,234.74,214.44,20.3,8.6
+SUP_00146,PLT_001,122.0,0.67,1 / semaine : mercredi,1.0,mercredi,3.0,3.0,0.61,252.32,204.11,48.21,19.1
+SUP_00143,PLT_001,21.0,0.83,1 semaine sur 2 (semaine 1) : mercredi,2.0,mercredi,3.0,3.0,1.8,231.7,184.58,47.12,20.3
+SUP_00066,PLT_001,22.0,1.0,1 / semaine : mardi,1.0,mardi,3.0,3.0,1.52,237.29,168.3,69.0,29.1
+SUP_00087,PLT_001,98.0,0.67,"1 semaine sur 2 (semaine 1) : mercredi, vendredi",2.0,"mercredi,vendredi",3.0,3.0,0.58,184.26,159.18,25.08,13.6
+SUP_00151,PLT_001,82.0,1.33,"1 semaine sur 2 (semaine 1) : lundi, jeudi",2.0,"lundi,jeudi",5.0,5.0,0.07,237.58,148.48,89.09,37.5
+SUP_00079,PLT_001,30.0,0.67,1 / semaine : vendredi,1.0,vendredi,3.0,3.0,1.05,165.1,139.86,25.24,15.3
+SUP_00149,PLT_001,13.0,0.5,"1 semaine sur 3 (semaine 1) : lundi, mercredi",3.0,"lundi,mercredi",2.0,2.0,1.56,139.86,115.38,24.47,17.5
+SUP_00086,PLT_001,122.0,0.5,"2 / semaine : mardi, mercredi",1.0,"mardi,mercredi",3.0,3.0,0.17,107.48,107.48,-0.0,-0.0
+SUP_00010,PLT_001,56.0,0.67,1 / semaine : jeudi,1.0,jeudi,3.0,3.0,0.05,112.14,84.11,28.04,25.0
+SUP_00092,PLT_001,65.0,0.5,"2 / semaine : lundi, mercredi",1.0,"lundi,mercredi",3.0,3.0,0.05,84.11,84.11,0.0,0.0
+SUP_00145,PLT_001,67.0,0.67,"1 semaine sur 2 (semaine 1) : mercredi, vendredi",2.0,"mercredi,vendredi",3.0,3.0,0.15,112.14,84.11,28.04,25.0
+SUP_00016,PLT_001,96.0,0.67,1 semaine sur 2 (semaine 2) : mercredi,2.0,mercredi,2.0,2.0,0.32,142.61,83.22,59.39,41.6
+SUP_00124,PLT_001,55.0,0.17,1 / semaine : lundi,1.0,lundi,1.0,1.0,1.49,74.67,74.67,0.0,0.0
+SUP_00090,PLT_001,33.0,0.17,1 / semaine : vendredi,1.0,vendredi,1.0,1.0,2.0,70.29,70.29,0.0,0.0
+SUP_00019,PLT_001,77.0,0.33,1 / semaine : vendredi,1.0,vendredi,1.0,1.0,0.68,87.83,58.14,29.7,33.8
+SUP_00094,PLT_001,46.0,0.17,1 / semaine : mardi,1.0,mardi,1.0,1.0,0.97,52.95,52.95,0.0,0.0
+SUP_00117,PLT_001,23.0,0.17,1 / semaine : jeudi,1.0,jeudi,1.0,1.0,0.99,43.47,43.47,0.0,0.0
+SUP_00037,PLT_002,69.0,1.67,1 / semaine : lundi,1.0,lundi,4.0,8.0,57.45,2631.64,1871.88,759.76,28.9
+SUP_00146,PLT_002,122.0,3.33,1 / semaine : lundi,1.0,lundi,5.0,5.0,42.71,4651.48,1472.49,3178.99,68.3
+SUP_00145,PLT_002,67.0,3.17,1 / semaine : lundi,1.0,lundi,5.0,5.0,10.58,1802.11,935.27,866.84,48.1
+SUP_00080,PLT_002,40.0,3.33,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",5.0,5.0,19.44,2175.25,927.65,1247.6,57.4
+SUP_00102,PLT_002,62.0,2.5,1 / semaine : lundi,1.0,lundi,4.0,4.0,10.87,1495.62,769.89,725.73,48.5
+SUP_00038,PLT_002,72.0,2.33,1 / semaine : lundi,1.0,lundi,5.0,5.0,8.16,1233.25,749.07,484.19,39.3
+SUP_00083,PLT_002,27.0,1.5,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",5.0,5.0,15.23,1120.91,759.64,361.27,32.2
+SUP_00136,PLT_002,59.0,2.83,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",5.0,5.0,4.73,1238.93,658.96,579.96,46.8
+SUP_00154,PLT_002,127.0,1.0,1 / semaine : lundi,1.0,lundi,4.0,4.0,2.97,747.77,603.7,144.07,19.3
+SUP_00097,PLT_002,72.0,1.33,1 / semaine : mardi,1.0,mardi,4.0,4.0,17.78,1177.26,602.12,575.14,48.9
+SUP_00073,PLT_002,48.0,0.67,1 / semaine : mercredi,1.0,mercredi,3.0,3.0,11.78,627.77,543.13,84.63,13.5
+SUP_00035,PLT_002,76.0,2.5,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",5.0,5.0,2.53,942.77,542.65,400.12,42.4
+SUP_00117,PLT_002,23.0,1.33,"2 / semaine : mardi, mercredi",1.0,"mardi,mercredi",4.0,4.0,11.06,736.87,513.44,223.44,30.3
+SUP_00045,PLT_002,95.0,1.17,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",4.0,4.0,2.9,639.8,460.36,179.44,28.0
+SUP_00091,PLT_002,22.0,3.0,1 / semaine : lundi,1.0,lundi,5.0,5.0,3.47,794.2,413.93,380.27,47.9
+SUP_00060,PLT_002,69.0,1.0,"1 semaine sur 2 (semaine 2) : lundi, vendredi",2.0,"lundi,vendredi",3.0,3.0,10.65,793.8,397.08,396.72,50.0
+SUP_00081,PLT_002,143.0,1.17,1 / semaine : jeudi,1.0,jeudi,4.0,4.0,1.28,489.78,384.12,105.66,21.6
+SUP_00124,PLT_002,55.0,1.17,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",4.0,4.0,2.45,522.67,378.04,144.64,27.7
+SUP_00152,PLT_002,57.0,2.17,1 / semaine : lundi,1.0,lundi,5.0,5.0,1.48,646.2,372.53,273.67,42.4
+SUP_00011,PLT_002,145.0,1.33,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",4.0,4.0,1.1,569.27,356.32,212.94,37.4
+SUP_00019,PLT_002,77.0,1.0,1 / semaine : jeudi,1.0,jeudi,4.0,4.0,1.81,455.66,354.38,101.29,22.2
+SUP_00032,PLT_002,12.0,0.5,1 / semaine : mardi,1.0,mardi,2.0,2.0,71.95,515.58,343.72,171.86,33.3
+SUP_00090,PLT_002,33.0,1.33,1 / semaine : mardi,1.0,mardi,4.0,4.0,2.57,453.15,329.83,123.33,27.2
+SUP_00092,PLT_002,65.0,1.5,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",5.0,5.0,1.01,439.38,304.14,135.24,30.8
+SUP_00096,PLT_002,30.0,0.83,"1 semaine sur 2 (semaine 1) : lundi, mercredi",2.0,"lundi,mercredi",4.0,4.0,2.65,331.12,291.3,39.83,12.0
+SUP_00128,PLT_002,68.0,1.5,1 / semaine : jeudi,1.0,jeudi,4.0,4.0,1.06,362.56,242.48,120.08,33.1
+SUP_00109,PLT_002,10.0,0.67,"1 semaine sur 2 (semaine 1) : lundi, mercredi",2.0,"lundi,mercredi",3.0,3.0,2.93,269.82,240.86,28.97,10.7
+SUP_00008,PLT_002,17.0,0.5,"2 / semaine : mercredi, vendredi",1.0,"mercredi,vendredi",3.0,3.0,2.72,234.37,234.37,0.0,0.0
+SUP_00058,PLT_002,33.0,1.0,1 / semaine : lundi,1.0,lundi,4.0,4.0,1.47,308.68,233.12,75.56,24.5
+SUP_00010,PLT_002,56.0,1.17,1 / semaine : mardi,1.0,mardi,4.0,4.0,1.15,336.15,231.86,104.28,31.0
+SUP_00024,PLT_002,64.0,0.83,"1 semaine sur 2 (semaine 2) : lundi, vendredi",2.0,"lundi,vendredi",2.0,2.0,4.06,409.84,222.18,187.66,45.8
+SUP_00118,PLT_002,100.0,1.5,"1 semaine sur 2 (semaine 1) : lundi, jeudi",2.0,"lundi,jeudi",5.0,5.0,0.33,314.92,217.28,97.64,31.0
+SUP_00087,PLT_002,98.0,0.67,1 / semaine : mercredi,1.0,mercredi,3.0,3.0,0.94,258.97,208.97,49.99,19.3
+SUP_00071,PLT_002,149.0,0.33,1 / semaine : mercredi,1.0,mercredi,1.0,1.0,6.08,293.44,207.43,86.01,29.3
+SUP_00046,PLT_002,91.0,0.67,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,2.0,2.0,2.52,319.29,203.54,115.75,36.3
+SUP_00028,PLT_002,54.0,0.5,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,8.46,319.82,191.75,128.07,40.0
+SUP_00107,PLT_002,9.0,2.33,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",5.0,5.0,0.72,369.77,184.99,184.79,50.0
+SUP_00079,PLT_002,30.0,1.17,1 / semaine : jeudi,1.0,jeudi,4.0,4.0,1.27,267.84,184.74,83.09,31.0
+SUP_00148,PLT_002,68.0,0.67,"1 semaine sur 2 (semaine 2) : mercredi, vendredi",2.0,"mercredi,vendredi",2.0,2.0,2.71,278.29,171.94,106.35,38.2
+SUP_00151,PLT_002,82.0,1.0,1 / semaine : mardi,1.0,mardi,3.0,3.0,0.46,263.5,159.18,104.32,39.6
+SUP_00144,PLT_002,38.0,1.0,1 / semaine : vendredi,1.0,vendredi,3.0,3.0,0.9,238.39,149.62,88.77,37.2
+SUP_00086,PLT_002,122.0,0.5,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,2.87,216.79,125.39,91.4,42.2
+SUP_00150,PLT_002,118.0,0.33,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,1.64,155.9,101.97,53.92,34.6
+SUP_00020,PLT_002,42.0,0.5,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,1.1,119.19,52.95,66.24,55.6
+SUP_00033,PLT_002,41.0,0.5,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,1.12,96.5,52.95,43.55,45.1
+SUP_00066,PLT_002,22.0,0.5,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,1.42,104.04,52.91,51.13,49.1
+SUP_00068,PLT_002,27.0,0.33,1 / semaine : mardi,1.0,mardi,1.0,1.0,1.4,69.36,52.91,16.45,23.7
+SUP_00143,PLT_002,21.0,0.5,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,1.55,104.04,52.91,51.13,49.1
+SUP_00094,PLT_002,46.0,0.17,1 / semaine : lundi,1.0,lundi,1.0,1.0,0.68,43.51,43.51,0.0,0.0
+SUP_00113,PLT_002,37.0,0.5,1 semaine sur 2 (semaine 1) : lundi,2.0,lundi,1.0,1.0,0.7,96.5,43.51,52.99,54.9
+SUP_00016,PLT_002,96.0,0.17,1 / semaine : mardi,1.0,mardi,1.0,1.0,0.39,41.61,41.61,0.0,0.0
+SUP_00039,PLT_002,80.0,0.5,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,0.21,89.09,41.61,47.48,53.3
+SUP_00053,PLT_002,26.0,0.83,1 / semaine : mercredi,1.0,mercredi,2.0,2.0,0.09,96.22,38.49,57.73,60.0
+SUP_00149,PLT_002,13.0,0.17,1 semaine sur 2 (semaine 2) : jeudi,2.0,jeudi,1.0,1.0,0.62,34.68,34.68,0.0,0.0
+SUP_00052,PLT_002,126.0,0.17,1 / semaine : mercredi,1.0,mercredi,1.0,1.0,0.05,33.46,33.46,0.0,0.0
+SUP_00122,PLT_002,63.0,0.5,1 semaine sur 2 (semaine 2) : vendredi,2.0,vendredi,1.0,1.0,0.04,84.11,28.04,56.07,66.7
+SUP_00132,PLT_002,24.0,0.17,1 / semaine : mercredi,1.0,mercredi,1.0,1.0,0.31,26.98,26.98,0.0,0.0
+SUP_00116,PLT_002,26.0,0.5,1 semaine sur 2 (semaine 1) : lundi,2.0,lundi,1.0,1.0,0.12,57.73,19.24,38.49,66.7
+SUP_00074,PLT_003,132.0,1.83,"1 semaine sur 2 (semaine 1) : lundi, jeudi",2.0,"lundi,jeudi",6.0,7.0,46.47,3300.86,2042.4,1258.45,38.1
+SUP_00059,PLT_003,122.0,4.17,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,15.81,3874.58,1792.51,2082.07,53.7
+SUP_00129,PLT_003,84.0,4.33,1 / semaine : lundi,1.0,lundi,6.0,6.0,12.42,3041.89,1488.05,1553.84,51.1
+SUP_00148,PLT_003,68.0,1.83,"1 semaine sur 2 (semaine 1) : mardi, jeudi",2.0,"mardi,jeudi",6.0,6.0,23.98,2327.58,1260.72,1066.86,45.8
+SUP_00024,PLT_003,64.0,1.0,1 semaine sur 2 (semaine 1) : mardi,2.0,mardi,3.0,3.0,24.14,1277.49,773.25,504.24,39.5
+SUP_00107,PLT_003,9.0,1.83,"1 semaine sur 2 (semaine 1) : mardi, jeudi",2.0,"mardi,jeudi",6.0,6.0,8.47,986.16,664.51,321.64,32.6
+SUP_00094,PLT_003,46.0,0.83,1 semaine sur 2 (semaine 1) : jeudi,2.0,jeudi,3.0,3.0,19.83,857.08,641.75,215.33,25.1
+SUP_00085,PLT_003,121.0,1.0,1 semaine sur 2 (semaine 1) : mardi,2.0,mardi,3.0,3.0,3.18,565.13,419.12,146.01,25.8
+SUP_00156,PLT_003,78.0,0.67,1 semaine sur 2 (semaine 1) : jeudi,2.0,jeudi,3.0,3.0,4.0,448.09,416.53,31.56,7.0
+SUP_00102,PLT_003,62.0,2.0,1 / semaine : mardi,1.0,mardi,6.0,6.0,1.04,638.83,385.37,253.46,39.7
+SUP_00136,PLT_003,59.0,1.17,"1 semaine sur 2 (semaine 1) : lundi, jeudi",2.0,"lundi,jeudi",4.0,4.0,2.29,491.88,378.04,113.85,23.1
+SUP_00038,PLT_003,72.0,1.0,1 semaine sur 2 (semaine 1) : mardi,2.0,mardi,3.0,3.0,4.04,522.19,362.6,159.59,30.6
+SUP_00087,PLT_003,98.0,0.67,"2 / semaine : lundi, mercredi",1.0,"lundi,mercredi",4.0,4.0,1.13,283.48,283.48,0.0,0.0
+SUP_00143,PLT_003,21.0,0.83,1 semaine sur 2 (semaine 1) : mercredi,2.0,mercredi,3.0,3.0,2.42,254.23,215.74,38.49,15.1
+SUP_00055,PLT_003,68.0,0.5,1 / semaine : mercredi,1.0,mercredi,3.0,3.0,0.87,164.69,164.69,0.0,0.0
+SUP_00060,PLT_003,69.0,0.5,"2 / semaine : mardi, mercredi",1.0,"mardi,mercredi",3.0,3.0,0.72,159.71,159.71,0.0,0.0
+SUP_00080,PLT_003,40.0,0.83,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",4.0,4.0,0.58,177.37,153.95,23.42,13.2
+SUP_00154,PLT_003,127.0,0.83,1 semaine sur 2 (semaine 1) : jeudi,2.0,jeudi,3.0,3.0,0.36,181.79,143.79,38.0,20.9
+SUP_00016,PLT_003,96.0,0.33,1 / semaine : mercredi,1.0,mercredi,2.0,2.0,0.99,134.3,134.3,0.0,0.0
+SUP_00126,PLT_003,122.0,0.17,1 / semaine : lundi,1.0,lundi,1.0,1.0,1.71,101.97,101.97,0.0,0.0
+SUP_00149,PLT_003,13.0,0.33,1 / semaine : vendredi,1.0,vendredi,2.0,2.0,0.71,69.36,69.36,0.0,0.0
+SUP_00092,PLT_003,65.0,0.17,1 / semaine : mardi,1.0,mardi,1.0,1.0,0.81,53.24,53.24,0.0,0.0
+SUP_00128,PLT_003,68.0,0.17,1 / semaine : mercredi,1.0,mercredi,1.0,1.0,0.66,53.24,53.24,0.0,0.0
+SUP_00099,PLT_003,43.0,0.17,1 / semaine : jeudi,1.0,jeudi,1.0,1.0,0.94,52.95,52.95,0.0,0.0
+SUP_00150,PLT_003,118.0,0.17,1 / semaine : lundi,1.0,lundi,1.0,1.0,0.19,31.48,31.48,0.0,0.0
+SUP_00118,PLT_003,100.0,0.17,1 / semaine : jeudi,1.0,jeudi,1.0,1.0,0.09,29.7,29.7,0.0,0.0
+SUP_00046,PLT_004,91.0,1.17,1 / semaine : lundi,1.0,lundi,6.0,9.0,74.28,2881.09,2585.17,295.92,10.3
+SUP_00085,PLT_004,121.0,5.0,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,48.21,7429.18,1988.44,5440.74,73.2
+SUP_00117,PLT_004,23.0,4.0,"1 semaine sur 2 (semaine 1) : lundi, jeudi",2.0,"lundi,jeudi",6.0,10.0,81.66,2386.13,1650.75,735.37,30.8
+SUP_00145,PLT_004,67.0,5.0,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,15.93,3033.99,1480.75,1553.23,51.2
+SUP_00087,PLT_004,98.0,4.67,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,11.22,2995.95,1402.08,1593.87,53.2
+SUP_00024,PLT_004,64.0,4.33,1 / semaine : lundi,1.0,lundi,6.0,6.0,14.64,2872.38,1423.31,1449.07,50.4
+SUP_00011,PLT_004,145.0,5.0,1 / semaine : lundi,1.0,lundi,6.0,6.0,6.2,2861.52,1320.68,1540.84,53.8
+SUP_00112,PLT_004,70.0,1.5,1 / semaine : lundi,1.0,lundi,6.0,6.0,11.7,1611.98,1233.58,378.4,23.5
+SUP_00080,PLT_004,40.0,4.83,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,18.84,2989.46,1179.94,1809.53,60.5
+SUP_00144,PLT_004,38.0,3.0,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,9.74,1643.82,969.22,674.6,41.0
+SUP_00149,PLT_004,13.0,5.0,1 / semaine : lundi,1.0,lundi,6.0,6.0,17.46,2516.99,963.75,1553.23,61.7
+SUP_00118,PLT_004,100.0,2.83,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,5.25,1450.98,919.75,531.22,36.6
+SUP_00094,PLT_004,46.0,4.67,1 / semaine : lundi,1.0,lundi,6.0,6.0,6.64,1711.93,820.86,891.07,52.1
+SUP_00041,PLT_004,48.0,4.17,1 / semaine : mardi,1.0,mardi,6.0,6.0,6.14,1569.36,783.26,786.1,50.1
+SUP_00043,PLT_004,85.0,3.0,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,3.66,1410.38,766.69,643.69,45.6
+SUP_00022,PLT_004,73.0,2.0,1 / semaine : lundi,1.0,lundi,6.0,6.0,3.77,1009.49,698.63,310.87,30.8
+SUP_00154,PLT_004,127.0,0.83,1 semaine sur 2 (semaine 1) : vendredi,2.0,vendredi,3.0,3.0,5.53,830.74,657.1,173.64,20.9
+SUP_00014,PLT_004,54.0,2.0,1 / semaine : mercredi,1.0,mercredi,5.0,5.0,4.26,962.54,637.65,324.88,33.8
+SUP_00135,PLT_004,52.0,0.83,1 semaine sur 2 (semaine 2) : lundi,2.0,lundi,3.0,3.0,10.72,794.65,609.33,185.31,23.3
+SUP_00010,PLT_004,56.0,2.0,1 / semaine : mercredi,1.0,mercredi,6.0,6.0,2.75,863.56,604.23,259.33,30.0
+SUP_00091,PLT_004,22.0,4.67,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,4.19,1137.36,566.31,571.05,50.2
+SUP_00136,PLT_004,59.0,1.33,1 / semaine : jeudi,1.0,jeudi,5.0,5.0,2.56,616.02,512.06,103.96,16.9
+SUP_00033,PLT_004,41.0,2.33,1 / semaine : lundi,1.0,lundi,6.0,6.0,2.14,704.18,487.18,216.99,30.8
+SUP_00019,PLT_004,77.0,2.0,"1 semaine sur 2 (semaine 1) : lundi, vendredi",2.0,"lundi,vendredi",6.0,6.0,1.34,697.66,466.97,230.69,33.1
+SUP_00032,PLT_004,12.0,1.83,1 / semaine : mardi,1.0,mardi,6.0,6.0,3.08,620.64,459.19,161.45,26.0
+SUP_00124,PLT_004,55.0,1.0,1 / semaine : mardi,1.0,mardi,5.0,5.0,1.68,448.01,399.79,48.21,10.8
+SUP_00121,PLT_004,55.0,1.67,1 / semaine : mardi,1.0,mardi,6.0,6.0,0.84,532.36,365.6,166.76,31.3
+SUP_00096,PLT_004,30.0,1.0,1 / semaine : lundi,1.0,lundi,4.0,4.0,5.07,480.74,359.12,121.62,25.3
+SUP_00152,PLT_004,57.0,0.83,"3 / semaine : mardi, mercredi, jeudi",1.0,"mardi,mercredi,jeudi",5.0,5.0,1.34,337.32,337.32,0.0,0.0
+SUP_00038,PLT_004,72.0,1.0,1 / semaine : jeudi,1.0,jeudi,4.0,4.0,0.76,319.41,236.04,83.38,26.1
+SUP_00100,PLT_004,58.0,0.33,"2 / semaine : lundi, mercredi",1.0,"lundi,mercredi",2.0,2.0,3.72,227.33,227.33,0.0,0.0
+SUP_00060,PLT_004,69.0,0.67,1 / semaine : mercredi,1.0,mercredi,4.0,4.0,0.71,212.94,212.94,0.0,0.0
+SUP_00128,PLT_004,68.0,1.17,1 / semaine : lundi,1.0,lundi,4.0,4.0,0.69,299.72,209.9,89.82,30.0
+SUP_00001,PLT_004,47.0,0.33,"1 semaine sur 2 (semaine 2) : mercredi, vendredi",2.0,"mercredi,vendredi",2.0,2.0,2.25,169.84,169.84,0.0,0.0
+SUP_00126,PLT_004,122.0,0.5,1 semaine sur 2 (semaine 2) : jeudi,2.0,jeudi,2.0,2.0,1.02,204.11,155.9,48.21,23.6
+SUP_00015,PLT_004,95.0,0.33,"1 semaine sur 2 (semaine 2) : mercredi, vendredi",2.0,"mercredi,vendredi",2.0,2.0,1.01,142.69,142.69,0.0,0.0
+SUP_00061,PLT_004,72.0,0.17,1 / semaine : mercredi,1.0,mercredi,1.0,1.0,3.26,117.57,117.57,0.0,0.0
+SUP_00009,PLT_004,15.0,0.17,1 / semaine : jeudi,1.0,jeudi,1.0,1.0,0.5,34.68,34.68,0.0,0.0
+SUP_00018,PLT_002,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
+SUP_00054,PLT_002,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
+SUP_00077,PLT_002,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
+SUP_00108,PLT_001,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
+SUP_00127,PLT_002,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
+SUP_00130,PLT_001,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
+SUP_00130,PLT_002,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
+SUP_00133,PLT_002,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
+SUP_00153,PLT_004,,,livraison actuelle conservee (H15),,,,,,,,0.0,0.0
