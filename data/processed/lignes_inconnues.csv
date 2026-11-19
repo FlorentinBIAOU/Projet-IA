@@ -1,0 +1,139 @@
+supplier_id,plant,date,raison,ligne_grille,nb_camions,cout
+SUP_00107,PLT_002,2026-11-09,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00109,PLT_002,2026-11-09,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00117,PLT_002,2026-11-09,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00133,PLT_002,2026-11-09,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00112,PLT_004,2026-11-10,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00117,PLT_002,2026-11-10,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_003,2026-11-10,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-10,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-10,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-10,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00108,PLT_001,2026-11-11,poids manquant + volume manquant,50.0,1,213.915181392
+SUP_00117,PLT_002,2026-11-11,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00127,PLT_002,2026-11-11,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_001,2026-11-11,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-11,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00145,PLT_002,2026-11-11,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00107,PLT_002,2026-11-12,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00117,PLT_002,2026-11-12,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_001,2026-11-12,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-12,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_001,2026-11-13,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-13,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-13,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-13,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-13,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-16,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00054,PLT_002,2026-11-17,poids manquant + volume manquant,50.0,1,213.915181392
+SUP_00085,PLT_003,2026-11-17,poids manquant + volume manquant,125.0,1,331.406474202
+SUP_00107,PLT_002,2026-11-17,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_001,2026-11-17,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-17,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00130,PLT_001,2026-11-17,distance manquante,150.0,1,381.7251589158
+SUP_00153,PLT_004,2026-11-17,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-17,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-17,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00019,PLT_002,2026-11-18,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00102,PLT_003,2026-11-18,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00129,PLT_003,2026-11-18,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-19,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00018,PLT_002,2026-11-20,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00018,PLT_002,2026-11-20,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00046,PLT_002,2026-11-20,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00046,PLT_002,2026-11-20,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00087,PLT_002,2026-11-20,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00097,PLT_002,2026-11-20,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00129,PLT_001,2026-11-20,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-20,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00130,PLT_002,2026-11-20,distance manquante,150.0,1,381.7251589158
+SUP_00144,PLT_001,2026-11-20,poids manquant + volume manquant,50.0,1,213.915181392
+SUP_00153,PLT_004,2026-11-20,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00153,PLT_004,2026-11-20,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00032,PLT_002,2026-11-23,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00117,PLT_002,2026-11-23,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_003,2026-11-23,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00135,PLT_004,2026-11-23,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00117,PLT_002,2026-11-24,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_001,2026-11-24,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-24,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00145,PLT_002,2026-11-24,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00129,PLT_001,2026-11-25,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-25,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00001,PLT_004,2026-11-26,poids manquant,50.0,1,213.915181392
+SUP_00005,PLT_001,2026-11-26,poids manquant + volume manquant,50.0,1,213.915181392
+SUP_00046,PLT_002,2026-11-26,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00046,PLT_002,2026-11-26,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00054,PLT_002,2026-11-26,poids manquant + volume manquant,50.0,1,213.915181392
+SUP_00077,PLT_002,2026-11-26,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00087,PLT_002,2026-11-26,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-11-26,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00130,PLT_002,2026-11-26,distance manquante,150.0,1,381.7251589158
+SUP_00001,PLT_004,2026-11-27,poids manquant,50.0,1,213.915181392
+SUP_00018,PLT_002,2026-11-27,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00032,PLT_002,2026-11-27,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00046,PLT_002,2026-11-27,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00046,PLT_002,2026-11-27,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00087,PLT_002,2026-11-27,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00117,PLT_002,2026-11-27,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_003,2026-11-27,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00130,PLT_002,2026-11-27,distance manquante,150.0,1,381.7251589158
+SUP_00001,PLT_004,2026-11-30,poids manquant,50.0,1,213.915181392
+SUP_00032,PLT_002,2026-11-30,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00107,PLT_002,2026-11-30,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_003,2026-11-30,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00001,PLT_004,2026-12-01,poids manquant,50.0,1,213.915181392
+SUP_00129,PLT_001,2026-12-01,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_001,2026-12-01,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00145,PLT_002,2026-12-01,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00001,PLT_004,2026-12-02,poids manquant,50.0,1,213.915181392
+SUP_00019,PLT_002,2026-12-02,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00080,PLT_002,2026-12-02,poids manquant + volume manquant,50.0,1,213.915181392
+SUP_00117,PLT_002,2026-12-02,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00133,PLT_002,2026-12-02,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00001,PLT_004,2026-12-03,poids manquant,50.0,1,213.915181392
+SUP_00077,PLT_002,2026-12-03,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00117,PLT_002,2026-12-03,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00145,PLT_002,2026-12-03,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00001,PLT_004,2026-12-04,poids manquant,50.0,1,213.915181392
+SUP_00107,PLT_002,2026-12-04,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00117,PLT_002,2026-12-04,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00127,PLT_002,2026-12-04,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_001,2026-12-04,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_001,2026-12-04,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-12-04,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00001,PLT_004,2026-12-07,poids manquant,50.0,1,213.915181392
+SUP_00117,PLT_002,2026-12-07,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_003,2026-12-07,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00001,PLT_004,2026-12-08,poids manquant,50.0,1,213.915181392
+SUP_00077,PLT_002,2026-12-08,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00117,PLT_002,2026-12-08,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00129,PLT_001,2026-12-08,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-12-08,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00133,PLT_002,2026-12-08,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00145,PLT_002,2026-12-08,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00001,PLT_004,2026-12-09,poids manquant,50.0,1,213.915181392
+SUP_00129,PLT_001,2026-12-09,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-12-09,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00001,PLT_004,2026-12-10,poids manquant,50.0,1,213.915181392
+SUP_00074,PLT_003,2026-12-10,poids manquant + volume manquant,150.0,1,381.7251589158
+SUP_00108,PLT_001,2026-12-10,poids manquant + volume manquant,50.0,1,213.915181392
+SUP_00129,PLT_001,2026-12-10,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-12-10,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00001,PLT_004,2026-12-11,poids manquant,50.0,1,213.915181392
+SUP_00005,PLT_001,2026-12-11,poids manquant,50.0,1,213.915181392
+SUP_00129,PLT_003,2026-12-11,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00001,PLT_004,2026-12-14,poids manquant,50.0,1,213.915181392
+SUP_00005,PLT_001,2026-12-14,poids manquant + volume manquant,50.0,1,213.915181392
+SUP_00129,PLT_001,2026-12-14,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-12-14,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00135,PLT_004,2026-12-14,poids manquant + volume manquant,75.0,1,260.4255276492
+SUP_00001,PLT_004,2026-12-15,poids manquant,50.0,1,213.915181392
+SUP_00129,PLT_001,2026-12-15,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-12-15,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00091,PLT_001,2026-12-16,poids manquant + volume manquant,30.0,1,171.8614014138
+SUP_00102,PLT_003,2026-12-16,poids manquant,75.0,1,260.4255276492
+SUP_00129,PLT_001,2026-12-16,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00129,PLT_003,2026-12-16,poids manquant + volume manquant,100.0,1,295.91600092560003
+SUP_00001,PLT_004,2026-12-17,poids manquant,50.0,1,213.915181392
+SUP_00001,PLT_004,2026-12-18,poids manquant,50.0,1,213.915181392
