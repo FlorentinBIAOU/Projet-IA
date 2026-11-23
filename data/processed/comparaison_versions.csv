@@ -1,0 +1,4 @@
+version,cout,economie EUR,economie %,camions,livraisons,part lundi %,semaines respectees,semaines du profil,part semaines respectees %,temps (s),temps < 90 s
+libre,74908.28,68412.47,47.7,567,566,21.7,452,1020,44.3,0.9,OK
+intermediaire,80754.8,62565.94,43.7,635,634,29.7,774,933,83.0,1.93,OK
+strict,83394.55,59926.19,41.8,659,658,33.1,773,773,100.0,0.43,OK
