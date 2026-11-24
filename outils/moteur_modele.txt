@@ -1,0 +1,164 @@
+"""Moteur de consolidation des livraisons (milestone 3).
+
+Pour chaque couple fournisseur x usine, le moteur :
+  1. evalue chacun des 166 profils de livraison par programmation dynamique exacte (le meilleur choix des jours utiles) ;
+  2. garde le profil le moins cher ;
+  3. lisse la charge de chaque usine dans la semaine parmi les profils presque aussi bons (R4) ;
+  4. reconstruit le contenu de chaque camion, puis valide la solution.
+
+Trois versions existent (hypothese H21) :
+  - "strict"        : tous les jours du profil sont retenus, chaque semaine. C'est la version recommandee par defaut :
+                      un profil propose est un engagement envers le fournisseur ;
+  - "intermediaire" : au moins MIN_SEMAINES_RESPECTEES semaines du profil sont respectees ;
+  - "libre"         : le profil est un maximum, le moteur retient les jours utiles au moins cher (comparaison).
+
+Le calendrier de livraison commence 7 jours avant le premier besoin (R1) : un besoin du lundi 09/11 peut partir des le
+lundi 02/11. Cette premiere semaine compte comme une semaine du profil (comme dans le notebook du milestone 3).
+
+Le code des methodes reprend, sans changement de calcul, celui du notebook notebooks/milestone3.ipynb ;
+les variables globales du notebook sont devenues des attributs (`self.AVANCE_MAX`, `self.COUPLES`...).
+"""
+import time
+from collections import Counter, defaultdict
+from dataclasses import dataclass, field
+from itertools import combinations
+
+import numpy as np
+import pandas as pd
+
+from .config import PARAMETRES_MOTEUR, VERSIONS
+from .tarifs import ligne_texte
+
+
+class ValidationEchouee(ValueError):
+    """La solution calculee viole une regle : le moteur refuse de la publier."""
+
+
+@dataclass
+class Resultat:
+    """Ce que renvoie `Moteur.lancer` pour une version."""
+    mode: str
+    choix: dict            # (fournisseur, usine) -> profil retenu apres lissage
+    cout: float            # cout total apres lissage
+    etape1: dict           # meilleur profil de chaque couple, avant lissage
+    contenu: pd.DataFrame  # sortie 2 : une ligne par ligne de besoin, avec son camion
+    temps: dict = field(default_factory=dict)
+    total: float = 0.0     # temps total (secondes)
+    controles: list = field(default_factory=list)   # [(nom du controle, ok)]
+
+
+#__FONCTIONS_MODULE__
+
+
+class Moteur:
+    """Moteur de consolidation. S'initialise avec le planning propre et la grille de prix ; `lancer()` calcule une version."""
+
+    def __init__(self, planning, grille, parametres=None):
+        """planning : planning propre (sortie de preparation.preparer_donnees) ; grille : prix finaux (lignes = km, colonnes = kg)."""
+        p = {**PARAMETRES_MOTEUR, **(parametres or {})}
+        if p["MODE_PROFIL"] not in VERSIONS:
+            raise ValueError(f"MODE_PROFIL doit valoir l'une de {VERSIONS}, pas {p['MODE_PROFIL']!r}.")
+        for nom, valeur in p.items():              # AVANCE_MAX, CAP_POIDS, MODE_PROFIL...
+            setattr(self, nom, valeur)
+        self.grille = grille.copy()
+        self.grille.columns = self.grille.columns.astype(str)
+        self.grille.index = self.grille.index.astype(str)
+        # Precalcul des prix : np.searchsorted trouve la tranche de poids en un seul appel (le moteur reste rapide).
+        self.BORNES = np.array(self.TRANCHES_KG, dtype=float)
+        self.PRIX_LIGNE = {lg: self.grille.loc[lg].values.astype(float) for lg in self.grille.index}
+
+        # Notre perimetre : les lignes optimisables (H15). ligne_grille en texte entier.
+        self.planning = planning
+        self.opt = planning[planning["statut"] == "optimise"].copy()
+        self.opt["ligne_grille"] = self.opt["ligne_grille"].apply(ligne_texte)
+
+        # Profils et calendrier (jours ouvres de l'horizon, hors semaines fermees H7)
+        self.PROFILS = self.generer_profils()
+        premier_besoin = self.opt["date"].min()
+        self.d1 = self.opt["date"].max()
+        # Premier jour de livraison possible : la regle des 7 jours vaut aussi au debut de l'horizon, donc un besoin du
+        # lundi 09/11 peut partir des le lundi 02/11. Par defaut : premier besoin - AVANCE_MAX ; reglable avec PREMIER_JOUR_LIVRAISON.
+        if self.PREMIER_JOUR_LIVRAISON is None:
+            self.d0 = premier_besoin - pd.Timedelta(self.AVANCE_MAX, unit="D")
+        else:
+            self.d0 = pd.Timestamp(self.PREMIER_JOUR_LIVRAISON)
+        while self.d0.weekday() >= 5:                 # un jour de livraison est un jour ouvre (lundi a vendredi)
+            self.d0 -= pd.Timedelta(1, unit="D")
+        self.lundi0 = self.d0 - pd.Timedelta(int(self.d0.weekday()), unit="D")   # lundi de la premiere semaine du calendrier
+        self.fermees = set(pd.to_datetime(self.SEMAINES_FERMEES))
+        self.jours_ouvres = pd.DatetimeIndex([d for d in pd.date_range(self.d0, self.d1, freq="D")
+                                              if d.weekday() < 5 and not self.semaine_fermee(d)])
+        self.DATES_PROFIL = [self.dates_profil(p) for p in self.PROFILS]
+        self.SEM_PROFIL = [self.semaines_du_profil(d) for d in self.DATES_PROFIL]
+        self.IDX_TOUS = list(range(len(self.PROFILS)))
+
+        # Les couples : besoins normaux tries par date, lignes exceptionnelles a part (H20)
+#__INIT_COUPLES__
+
+    #__METHODES__
+    # ----------------------------------------------------------------------
+    # Baselines : la situation actuelle (chaque besoin livre le jour meme)
+    # ----------------------------------------------------------------------
+    def calculer_baselines(self):
+        """Cout et camions de la situation actuelle : baseline du milestone 2 (ligne lourde coupee) et baseline H20
+        (la ligne exceptionnelle = un camion au tarif '>4000'). Renvoie un dictionnaire."""
+        baseline_m2 = 0.0; camions_m2 = 0
+        for (s, pl, dt), g in self.opt.groupby(["supplier_id", "plant", "date"]):
+            cams = self.charger_camions_vieux(g["weight"].values, g["volume"].values)
+            baseline_m2 += sum(self.prix_camion(g["ligne_grille"].iloc[0], w) for w in cams); camions_m2 += len(cams)
+        baseline_h20 = 0.0; camions_h20 = 0
+        for (s, pl, dt), g in self.opt.groupby(["supplier_id", "plant", "date"]):
+            lg = g["ligne_grille"].iloc[0]
+            exc = (g["weight"].values > self.CAP_POIDS) | (g["volume"].values > self.CAP_VOLUME)
+            normal = g[~exc]
+            if len(normal):
+                cams = self.charger_camions_vieux(normal["weight"].values, normal["volume"].values)
+                baseline_h20 += sum(self.prix_camion(lg, w) for w in cams); camions_h20 += len(cams)
+            for _ in range(int(exc.sum())):
+                baseline_h20 += self.prix_exceptionnel(lg); camions_h20 += 1
+        return {"baseline_m2": baseline_m2, "camions_m2": camions_m2, "baseline_h20": baseline_h20, "camions_h20": camions_h20,
+                "livraisons_actuelles": self.opt.groupby(["supplier_id", "plant", "date"]).ngroups}
+
+    # ----------------------------------------------------------------------
+    # Le moteur complet
+    # ----------------------------------------------------------------------
+    @staticmethod
+    def meilleurs(candidats):
+        """Pour chaque couple, le profil le moins cher parmi les candidats (etape 1)."""
+        return {cle: min(v, key=lambda r: r["cout"]) for cle, v in candidats.items() if v}
+
+    def lancer(self, mode=None, un_camion=None, tolerance=None, limite_secondes=None):
+        """Enchaine tout le moteur pour une version et mesure chaque etape.
+
+        mode : 'libre', 'intermediaire' ou 'strict' (par defaut : MODE_PROFIL) ;
+        Leve `ValidationEchouee` (avec le detail, et les couples sans profil possible) si la solution viole une regle.
+        """
+        mode = self.MODE_PROFIL if mode is None else mode
+        un_camion = self.UN_CAMION_PAR_JOUR if un_camion is None else un_camion
+        tolerance = self.TOLERANCE_LISSAGE if tolerance is None else tolerance
+        limite = self.TEMPS_MAX_SECONDES if limite_secondes is None else limite_secondes
+        temps = {}
+        t = time.perf_counter()
+        candidats = self.evaluer_tous(self.IDX_TOUS, un_camion=un_camion, mode=mode)
+        meilleur = self.meilleurs(candidats)
+        temps["evaluation des couples et profils"] = time.perf_counter() - t
+        t = time.perf_counter()
+        choix, cout = self.lissage(candidats, meilleur, tolerance)
+        temps["lissage"] = time.perf_counter() - t
+        t = time.perf_counter()
+        contenu = self.construire_contenu(choix)
+        temps["construction des sorties"] = time.perf_counter() - t
+        t = time.perf_counter()
+        controles = self.valider(choix, contenu, cout, mode=mode)
+        temps["validations"] = time.perf_counter() - t
+        echecs = [nom for nom, ok in controles if not ok]
+        if echecs:
+            sans_profil = sorted(cle for cle, v in candidats.items() if not v)
+            detail = "\n- ".join(echecs)
+            if sans_profil:
+                detail += f"\nCouples sans aucun profil possible ({len(sans_profil)}) : " + ", ".join(f"{s} x {pl}" for s, pl in sans_profil)
+            raise ValidationEchouee(f"Une validation a echoue : nous ne publions pas ce resultat.\n- {detail}")
+        total = sum(temps.values())
+        if total > limite:
+            raise RuntimeError(f"Le moteur a depasse la limite de {limite} s ({total:.1f} s).")
+        return Resultat(mode=mode, choix=choix, cout=cout, etape1=meilleur, contenu=contenu, temps=temps, total=total, controles=controles)

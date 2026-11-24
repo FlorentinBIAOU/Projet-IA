@@ -2,3 +2,9 @@
 .git/
 .ipynb_checkpoints/
 __pycache__/
+sauvegardes/
+resultats/
+.pytest_cache/
+.DS_Store
+*.zip
+archives_perso/
