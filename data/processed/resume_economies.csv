@@ -1,14 +1,14 @@
 indicateur,valeur
-Version du moteur (MODE_PROFIL),libre
+Version du moteur (MODE_PROFIL),strict
 Cout avant - baseline H20 (perimetre),143320.74
-Cout apres (perimetre),74908.28
-Economie (EUR),68412.47
-Economie (%),47.7
+Cout apres (perimetre),82110.82
+Economie (EUR),61209.92
+Economie (%),42.7
 Camions avant,1604
-Camions apres,567
+Camions apres,652
 Livraisons avant,1599
-Livraisons apres,566
+Livraisons apres,651
 Rappel baseline milestone 2,143422.43
 "Cout lignes inconnues (H16, inchange)",35032.42
 Cout total avant (avec inconnues),178353.16
-Cout total apres (avec inconnues),109940.7
+Cout total apres (avec inconnues),117143.24
