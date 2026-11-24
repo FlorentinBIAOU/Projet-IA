@@ -1,0 +1,33 @@
+# docker compose up                              -> le dashboard sur http://localhost:8501
+# docker compose --profile calcul run --rm calcul -> le programme en ligne de commande (resultats dans ./resultats)
+# docker compose --profile notebooks up           -> JupyterLab sur http://localhost:8888
+services:
+  app:
+    image: projet-ia-app
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./resultats:/app/resultats
+
+  calcul:
+    image: projet-ia-app
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    command: ["python", "main.py", "--version", "toutes"]
+    volumes:
+      - ./resultats:/app/resultats
+    profiles: ["calcul"]
+
+  notebooks:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/app
+    profiles: ["notebooks"]
