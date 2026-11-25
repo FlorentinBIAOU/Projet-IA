@@ -90,7 +90,8 @@ main.py                 point d'entree en ligne de commande : python main.py
 app.py                  dashboard Streamlit : streamlit run app.py (ou ./lancer_app.sh)
 dashboard/              le dashboard : sorties_client.py (calcul des sorties), explorateur.py (calendrier), page_*.py (les 3 pages), style.py, graphiques.py
 outils/                 regenerer_moteur.py : regenere src/moteur.py quand le moteur du notebook change
-Dockerfile.app          image de l'application (dashboard et programme) ; docker-compose.yml la lance
+Dockerfile              image de l'application (dashboard et programme) ; docker-compose.yml la lance
+Dockerfile.notebooks    image JupyterLab, pour explorer les notebooks
 src/
   config.py             regles, parametres et chemins (un seul endroit)
   preparation.py        nettoyage du planning (milestone 1)
@@ -152,13 +153,12 @@ python main.py        # lancer le programme (resultats dans resultats/)
 jupyter lab           # ou explorer les notebooks
 ```
 
-**Option 2 — Docker**
+**Option 2 : Docker (l'application)**
 ```bash
 docker build -t projet-ia .
-docker run --rm -p 8888:8888 -v "$PWD":/app projet-ia
+docker run --rm -p 127.0.0.1:8501:8501 projet-ia
 ```
-Puis ouvrir http://127.0.0.1:8888/lab. Pour lancer le programme dans ce conteneur :
-`docker run --rm -v "$PWD":/app projet-ia python main.py`
+Puis ouvrir http://localhost:8501.
 
 **Option 3 — Docker Compose (l'application)**
 ```bash
@@ -166,7 +166,7 @@ docker compose up                                  # le dashboard sur http://loc
 docker compose --profile calcul run --rm calcul    # le programme en ligne de commande, les trois versions (résultats dans ./resultats)
 docker compose --profile notebooks up              # JupyterLab sur http://localhost:8888
 ```
-L'image de l'application est décrite dans `Dockerfile.app` ; le `Dockerfile` d'origine reste celui des notebooks.
+L'image de l'application est décrite dans `Dockerfile`, celle de JupyterLab dans `Dockerfile.notebooks`.
 
 
 ## Règles

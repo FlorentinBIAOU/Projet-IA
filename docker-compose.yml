@@ -6,9 +6,9 @@ services:
     image: projet-ia-app
     build:
       context: .
-      dockerfile: Dockerfile.app
+      dockerfile: Dockerfile
     ports:
-      - "8501:8501"
+      - "127.0.0.1:8501:8501"
     volumes:
       - ./resultats:/app/resultats
 
@@ -16,7 +16,7 @@ services:
     image: projet-ia-app
     build:
       context: .
-      dockerfile: Dockerfile.app
+      dockerfile: Dockerfile
     command: ["python", "main.py", "--version", "toutes"]
     volumes:
       - ./resultats:/app/resultats
@@ -25,9 +25,9 @@ services:
   notebooks:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.notebooks
     ports:
-      - "8888:8888"
+      - "127.0.0.1:8888:8888"
     volumes:
       - .:/app
     profiles: ["notebooks"]
