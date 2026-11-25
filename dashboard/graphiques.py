@@ -132,3 +132,18 @@ def courbes_prix(df, y, titre_y, echelle_log=False, hauteur=330, escalier=False)
         tooltip=[alt.Tooltip("ligne:N", title="distance"), alt.Tooltip("poids_txt:N", title="poids (kg)"),
                  alt.Tooltip("prix_txt:N", title="prix (€)"), alt.Tooltip("prixkg_txt:N", title="prix au kilo (€)")],
     ).properties(height=hauteur)
+
+
+ETATS_LISSAGE = ["Aujourd'hui", "Avant lissage", "Après lissage"]
+
+
+def barres_trois_etats(df, x, valeur, ordre=None, titre_y="", hauteur=300):
+    """Barres groupees Aujourd'hui / Avant lissage / Apres lissage (gris, bleu clair, bleu). df : colonnes x, etat, valeur (en %)."""
+    df = df.assign(texte=[fr(v, 1) + " %" for v in df[valeur]])
+    return alt.Chart(df).mark_bar(cornerRadiusTopLeft=4, cornerRadiusTopRight=4).encode(
+        x=alt.X(f"{x}:N", sort=ordre, title=None, axis=alt.Axis(labelAngle=0)),
+        xOffset=alt.XOffset("etat:N", sort=ETATS_LISSAGE),
+        y=alt.Y(f"{valeur}:Q", title=titre_y),
+        color=alt.Color("etat:N", scale=alt.Scale(domain=ETATS_LISSAGE, range=[AVANT, "#56B4E9", APRES]), sort=ETATS_LISSAGE),
+        tooltip=[alt.Tooltip(f"{x}:N", title=" "), alt.Tooltip("etat:N", title=" "), alt.Tooltip("texte:N", title=titre_y or valeur)],
+    ).properties(height=hauteur)

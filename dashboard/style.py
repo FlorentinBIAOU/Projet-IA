@@ -153,3 +153,77 @@ def carte_graphique(titre, aide=""):
         st.markdown(f'<div class="titre-graphique">{html.escape(titre)}</div>' + (f'<div class="sous-graphique">{html.escape(aide)}</div>' if aide else ""),
                     unsafe_allow_html=True)
     return c
+
+
+# ------------------------------------------------------------------------------------------------ calendrier d'un couple
+# Elements ajoutes pour la page "Details des sorties" : calendrier semaine x jour, cartes de camions, pastilles de jours, panneau d'un camion.
+# Les couleurs sont des variables : la page reste lisible en theme sombre (voir le bloc prefers-color-scheme).
+CSS_CALENDRIER = """
+<style>
+:root { --cal-case:#FFFFFF; --cal-profil:#EAF3FB; --cal-profil-bord:#BBD7EE; --cal-texte:#2B3A4D; --cal-ferme-a:#F1F3F6; --cal-ferme-b:#E6E9EE; --cal-jauge:rgba(11,37,69,.13); }
+@media (prefers-color-scheme: dark) { :root { --cal-case:#1B2433; --cal-profil:#16324A; --cal-profil-bord:#2C5A83; --cal-texte:#D5DDE8;
+  --cal-ferme-a:#1E2531; --cal-ferme-b:#262E3C; --cal-jauge:rgba(255,255,255,.18); } }
+.kpis.compact { margin: 0 0 14px; gap: 12px; }
+.kpis.compact .kpi { padding: 11px 16px 10px; border-radius: 14px; }
+.kpis.compact .val { font-size: 1.3rem; margin: 4px 0 2px; white-space: nowrap; }
+.kpis.compact .det { font-size: .8rem; }
+.kpi .val.ok { color: #1E8E5A; } .kpi .val.non { color: #C0392B; }
+.pastilles-jours { display: inline-flex; gap: 5px; vertical-align: middle; }
+.pastilles-jours b { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: .74rem;
+  font-weight: 700; background: #E3E8EF; color: #8895A7; }
+.pastilles-jours b.on { background: var(--bleu); color: #fff; }
+.puce-statut { display: inline-block; padding: 3px 12px; border-radius: 99px; font-size: .78rem; font-weight: 700; background: #E5F4EC; color: #1E8E5A; }
+.puce-statut.partiel { background: #FDF0E1; color: #B5651D; } .puce-statut.non { background: #FDF0E1; color: #B5651D; } .puce-statut.vide { background: #E3E8EF; color: #5B6B7F; }
+.entete-couple { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 4px 0 14px; }
+.entete-couple .nom { font-size: 1.35rem; font-weight: 800; color: var(--navy); letter-spacing: -.01em; }
+.entete-couple .prof { color: var(--gris); font-size: .9rem; }
+.cal { display: grid; grid-template-columns: 62px repeat(5, minmax(0, 1fr)); gap: 6px; color: var(--cal-texte); }
+.cal .ent { font-weight: 700; color: var(--gris); text-transform: uppercase; font-size: .68rem; letter-spacing: .07em; text-align: center; padding: 2px 0 4px; }
+.cal .sem { font-weight: 700; color: var(--navy); font-size: .72rem; padding-top: 7px; line-height: 1.25; }
+.cal .sem small { display: block; color: var(--gris); font-weight: 600; }
+.cal .j { background: var(--cal-case); border: 1px solid var(--bord); border-radius: 10px; padding: 5px 6px 6px; min-height: 52px; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.cal .j.prof { background: var(--cal-profil); border-color: var(--cal-profil-bord); }
+.cal .j.ferme { background: repeating-linear-gradient(45deg, var(--cal-ferme-a), var(--cal-ferme-a) 6px, var(--cal-ferme-b) 6px, var(--cal-ferme-b) 12px); }
+.cal .j .d { font-size: .66rem; color: var(--gris); font-weight: 600; display: flex; justify-content: space-between; }
+.cal .j .d i { font-style: normal; color: var(--bleu); font-weight: 700; }
+.cam { border-radius: 8px; padding: 5px 7px 6px; border-left: 4px solid var(--typ); background: var(--typfond); color: #2B3A4D; font-size: .72rem; line-height: 1.3; }
+.cam.opt { --typ: #0072B2; --typfond: #E1EFFA; } .cam.exc { --typ: #C0392B; --typfond: #FBE6E2; }
+.cam.non { --typ: #D9822B; --typfond: #FDEFDC; } .cam.act { --typ: #8895A7; --typfond: #ECEFF4; }
+.cam.sel { outline: 2px solid var(--navy); outline-offset: 1px; }
+.cam .t { font-weight: 700; color: var(--navy); display: flex; justify-content: space-between; gap: 4px; }
+.cam .prix { font-weight: 700; } .cam .b { color: #5B6B7F; font-size: .68rem; }
+.jauge { height: 5px; background: var(--cal-jauge); border-radius: 3px; overflow: hidden; margin: 3px 0; }
+.jauge i { display: block; height: 100%; background: var(--typ, #0072B2); border-radius: 3px; }
+.jauge.grande { height: 10px; border-radius: 5px; margin: 5px 0 12px; } .jauge.grande i { border-radius: 5px; }
+.pt { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--pt, #8895A7); margin-right: 4px; vertical-align: middle; }
+.bes { font-size: .7rem; line-height: 1.3; padding: 2px 4px; border-radius: 5px; color: var(--cal-texte); }
+.bes small { color: var(--gris); } .bes.sel { background: rgba(11,37,69,.10); font-weight: 600; }
+.legende { display: flex; flex-wrap: wrap; gap: 16px; font-size: .78rem; color: var(--gris); margin: 6px 0 14px; }
+.legende span::before { content: ""; display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); border: 1px solid rgba(11,37,69,.15); }
+.panneau-titre { font-size: 1.1rem; font-weight: 800; color: var(--navy); } .panneau-sous { color: var(--gris); font-size: .86rem; margin-bottom: 8px; }
+.ligne-chiffres { display: flex; flex-wrap: wrap; gap: 22px; margin: 6px 0 10px; }
+.ligne-chiffres div { font-size: .78rem; color: var(--gris); text-transform: uppercase; letter-spacing: .05em; } .ligne-chiffres b { display: block; font-size: 1.15rem; color: var(--navy); text-transform: none; letter-spacing: 0; }
+</style>
+"""
+
+
+def appliquer_style_calendrier():
+    """Injecte les styles du calendrier (a appeler apres `appliquer_style`)."""
+    st.markdown(CSS_CALENDRIER, unsafe_allow_html=True)
+
+
+def kpis_compacts(cartes):
+    """La ligne d'indicateurs du haut de chaque page : [(libelle, valeur, detail, ton)], ton parmi '', 'vert', 'gris', 'rouge'."""
+    c = ""
+    for lib, val, det, ton in cartes:
+        accent = {"rouge": "style=\"--accent:#C0392B\""}.get(ton, "")
+        classe_val = {"vert": "ok", "rouge": "non"}.get(ton, "")
+        c += (f'<div class="kpi {"vert" if ton == "vert" else ton}" {accent}><div class="lib">{html.escape(lib)}</div>'
+              f'<div class="val {classe_val}">{html.escape(val)}</div><div class="det">{det}</div></div>')
+    st.markdown(f'<div class="kpis compact">{c}</div>', unsafe_allow_html=True)
+
+
+def _css_haut():
+    st.markdown("<style>.logo-haut{font-size:1.25rem;font-weight:800;color:#0B2545;letter-spacing:-.01em}.logo-haut span{color:#0072B2}"
+                "section[data-testid='stSidebar'],div[data-testid='stSidebarCollapsedControl']{display:none}"
+                "header[data-testid='stHeader']{background:#F4F6FA !important;border-bottom:1px solid #E3E8EF;z-index:1000}</style>", unsafe_allow_html=True)
