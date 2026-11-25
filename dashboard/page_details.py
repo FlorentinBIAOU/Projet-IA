@@ -14,7 +14,6 @@ def _retenir():
 
 def page():
     ctx = xp.contexte()
-    xp.kpis_haut(ctx)
     options = list(ctx.couples)
     sel = st.session_state.get("couple_sel")
     if sel is None or sel not in sc.couples_fichier(ctx.ex):
@@ -35,7 +34,7 @@ def page():
                 f'<span class="puce-statut {CLASSES_STATUT[c["statut"]]}">{xp.e(c["statut"])}</span><span class="prof">{xp.e(c["profil"])}</span></div>', unsafe_allow_html=True)
     style.kpis_compacts([
         ("Camions optimisés", xp.nombre(c["camions_optimises"]), "", ""),
-        ("Envois non optimisés", xp.nombre(c["envois_non_optimises"]), "", "gris"),
+        ("Envois hors optimisation", xp.nombre(c["envois_non_optimises"]), "", "gris"),
         ("Livraisons aujourd'hui", xp.nombre(c["livraisons_aujourdhui"]), "", "gris"),
         ("Coût avant → après", f"{xp.nombre(c['cout_avant'])} → {xp.eur(c['cout_apres'])}",
          f"<b>−{xp.pct((c['cout_avant'] - c['cout_apres']) / c['cout_avant'] * 100, 0)}</b>" if c["cout_avant"] > 0 else "rien à optimiser", "vert"),

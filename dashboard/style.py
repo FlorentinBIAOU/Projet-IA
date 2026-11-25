@@ -220,10 +220,68 @@ def kpis_compacts(cartes):
         classe_val = {"vert": "ok", "rouge": "non"}.get(ton, "")
         c += (f'<div class="kpi {"vert" if ton == "vert" else ton}" {accent}><div class="lib">{html.escape(lib)}</div>'
               f'<div class="val {classe_val}">{html.escape(val)}</div><div class="det">{det}</div></div>')
-    st.markdown(f'<div class="kpis compact">{c}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="kpis compact" style="grid-template-columns:repeat({len(cartes)},1fr)">{c}</div>', unsafe_allow_html=True)
 
 
 def _css_haut():
     st.markdown("<style>.logo-haut{font-size:1.25rem;font-weight:800;color:#0B2545;letter-spacing:-.01em}.logo-haut span{color:#0072B2}"
                 "section[data-testid='stSidebar'],div[data-testid='stSidebarCollapsedControl']{display:none}"
-                "header[data-testid='stHeader']{background:#F4F6FA !important;border-bottom:1px solid #E3E8EF;z-index:1000}</style>", unsafe_allow_html=True)
+                "header[data-testid='stHeader']{background:#F4F6FA !important;border-bottom:1px solid #E3E8EF;z-index:1000}"
+                "[data-testid='stFileUploaderDropzoneInstructions']{display:none}.st-key-cache_fichiers,.st-key-cache_filtres{display:none}"
+                "[data-testid='stFileUploaderDropzone'] button [data-testid='stMarkdownContainer'] p{display:none}"
+                "[data-testid='stFileUploaderDropzone'] button [data-testid='stMarkdownContainer']::after{content:'Parcourir'}</style>", unsafe_allow_html=True)
+
+
+# ------------------------------------------------------------------------------------------------ style sobre
+# Sans ombres ni degrades : des aplats et des filets fins (s'applique par-dessus les styles ci-dessus).
+CSS_SOBRE = """
+<style>
+.hero { background: #0B2545 !important; box-shadow: none !important; border-radius: 8px !important; }
+.hero::after { display: none !important; }
+.kpi, .carte, div[data-testid="stVerticalBlockBorderWrapper"] { box-shadow: none !important; border-radius: 8px !important; }
+.kpi { border-top: 1px solid var(--bord) !important; }
+.kpi .lib { letter-spacing: .02em; text-transform: none; font-size: .85rem; }
+.stButton button[kind="primary"], .stDownloadButton button[kind="primary"] { background: #0B2545 !important; box-shadow: none !important; border-radius: 6px !important; }
+.stButton button, .stDownloadButton button, div[data-testid="stPopover"] button { border-radius: 6px !important; }
+div[data-testid="stDataFrame"] { border-radius: 6px; }
+.cal .j { border-radius: 4px; }
+.cam { background: transparent !important; border-left: 3px solid var(--typ); border-radius: 0; padding: 2px 0 2px 8px; font-size: 1.05rem; line-height: 1.4; color: #0B2545 !important; white-space: nowrap; }
+.cal .j { padding: 6px 7px 8px !important; }
+.cal { grid-template-columns: 48px repeat(5, minmax(0, 1fr)) !important; gap: 5px !important; }
+.cam.sel { outline: none; background: rgba(11,37,69,.07) !important; }
+.cal .j .d { font-size: .8rem; }
+.jours5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 6px; }
+.jours5 span { font-size: .78rem; color: var(--gris); text-transform: capitalize; }
+.jours5 b { display: block; font-size: 1rem; color: var(--navy); }
+</style>
+"""
+
+
+def appliquer_style_sobre():
+    st.markdown(CSS_SOBRE, unsafe_allow_html=True)
+
+
+CSS_TABLEAU = """
+<style>
+.tab-aa { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #E3E8EF; border-radius: 8px; overflow: hidden; margin: 6px 0 14px;
+  font-size: 1rem; color: #0B2545; font-variant-numeric: tabular-nums; }
+.tab-aa th { text-align: right; font-weight: 600; color: #5B6B7F; font-size: .85rem; padding: 10px 18px; background: #F7F9FC; border-bottom: 1px solid #E3E8EF; }
+.tab-aa th:first-child { text-align: left; }
+.tab-aa td { padding: 9px 18px; border-bottom: 1px solid #EEF1F5; text-align: right; white-space: nowrap; }
+.tab-aa td:first-child { text-align: left; white-space: normal; }
+.tab-aa tr.total td { font-weight: 700; font-size: 1.05rem; border-top: 1px solid #D5DCE6; }
+.tab-aa tr.detail td { color: #5B6B7F; font-size: .93rem; }
+.tab-aa tr.detail td:first-child { padding-left: 38px; }
+.tab-aa td.apres { color: #0072B2; font-weight: 600; } .tab-aa tr.total td.apres { color: #0072B2; }
+.tab-aa td.ecart { color: #1E8E5A; font-weight: 600; } .tab-aa tr.detail td.ecart { font-weight: 500; }
+.tab-aa tr:last-child td { border-bottom: none; }
+</style>
+"""
+
+
+def tableau_avant_apres(lignes):
+    """Tableau avant / apres net (HTML) : [(libelle, avant, apres, ecart, niveau)], niveau parmi 'total', 'detail', 'simple'."""
+    corps = "".join(f'<tr class="{niv}"><td>{html.escape(lib)}</td><td>{html.escape(av)}</td><td class="apres">{html.escape(ap)}</td>'
+                    f'<td class="ecart">{html.escape(ec)}</td></tr>' for lib, av, ap, ec, niv in lignes)
+    st.markdown(CSS_TABLEAU + f'<table class="tab-aa"><thead><tr><th>Indicateur</th><th>Avant</th><th>Après</th><th>Écart</th></tr></thead>'
+                f"<tbody>{corps}</tbody></table>", unsafe_allow_html=True)

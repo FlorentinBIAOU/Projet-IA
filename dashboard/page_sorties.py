@@ -1,5 +1,6 @@
 """Page « Sorties » : les trois sorties demandees par le client (slides « Livrables attendus »), telechargeables, chaque couple cliquable."""
 import io
+import zipfile
 
 import pandas as pd
 import streamlit as st
@@ -17,8 +18,8 @@ CONFIG_S1 = {
     "profil": None, "jours_livres_semaine": st.column_config.TextColumn("Jours livrés (semaine)", width="medium"),
     "camions_semaine": st.column_config.NumberColumn("Camions (semaine)", format="%d"),
     "remplissage_poids_%": st.column_config.ProgressColumn("Remplissage poids", min_value=0, max_value=100, format="%.1f %%"),
-    "lignes_non_optimisees": st.column_config.NumberColumn("Lignes non optimisées", format="%d"),
-    "dates_non_optimisees": st.column_config.TextColumn("Dates non optimisées", width="medium"),
+    "lignes_non_optimisees": st.column_config.NumberColumn("Lignes hors optimisation", format="%d"),
+    "dates_non_optimisees": st.column_config.TextColumn("Dates hors optimisation", width="medium"),
 }
 CONFIG_S2 = {
     "camion_id": st.column_config.TextColumn("Camion"), "type": st.column_config.TextColumn("Type", width="medium"),
@@ -47,7 +48,7 @@ CONFIG_S3 = {
     "cout_optimise_horizon": st.column_config.NumberColumn("Optimisé (horizon)", format="%.0f €"),
     "economie_horizon": st.column_config.NumberColumn("Économie (horizon)", format="%.0f €"),
     "economie_horizon_%": st.column_config.ProgressColumn("Économie % (horizon)", min_value=0, max_value=100, format="%.0f %%"),
-    "cout_non_optimise": st.column_config.NumberColumn("Lignes non optimisées (inchangé)", format="%.0f €"),
+    "cout_non_optimise": st.column_config.NumberColumn("Hors optimisation (inchangé)", format="%.0f €"),
 }
 
 
@@ -55,16 +56,16 @@ def csv(df):
     return df.to_csv(index=False).encode("utf-8")
 
 
-@st.cache_data(show_spinner=False, max_entries=8)
-def excel(_ex, cle_cache, version, lundi):
-    """Les trois sorties dans un classeur Excel : une feuille par sortie (la sortie 2 a deux feuilles)."""
-    s2, mat = sc.sortie2(_ex, version)
+COLONNES_SEMAINE_S1 = ["livraisons_sem_actuelles", "jours_livres_semaine", "camions_semaine"]
+COLONNES_SEMAINE_S3 = ["cout_actuel_semaine", "cout_optimise_semaine", "economie_semaine", "economie_semaine_%"]
+
+
+def tout_en_csv(tables):
+    """Toutes les sorties : un fichier CSV par tableau, reunis dans une archive zip."""
     tampon = io.BytesIO()
-    with pd.ExcelWriter(tampon, engine="openpyxl") as w:
-        sc.sortie1(_ex, version, lundi).to_excel(w, sheet_name="Sortie 1 - Profils", index=False)
-        s2.to_excel(w, sheet_name="Sortie 2 - Camions", index=False)
-        mat.to_excel(w, sheet_name="Sortie 2 - Materials", index=False)
-        sc.sortie3(_ex, version, lundi).to_excel(w, sheet_name="Sortie 3 - Savings", index=False)
+    with zipfile.ZipFile(tampon, "w", zipfile.ZIP_DEFLATED) as z:
+        for nom, tableau in tables.items():
+            z.writestr(f"{nom}.csv", csv(tableau))
     return tampon.getvalue()
 
 
@@ -76,13 +77,16 @@ def page():
     s2, mat = sc.sortie2(ex, v)
     s2 = ctx.garde(s2, "fournisseur", "usine")
     s3 = ctx.garde(sc.sortie3(ex, v, ctx.lundi), "fournisseur", "usine")
+    if ctx.lundi is None:                                 # toutes les semaines : on garde les colonnes de l'horizon
+        s1, s3 = s1.drop(columns=COLONNES_SEMAINE_S1), s3.drop(columns=COLONNES_SEMAINE_S3)
+    mat_f = mat[mat["camion_id"].isin(s2["camion_id"])]
     haut, bouton = st.columns([3, 1.3])
     with haut:
-        style.section("Les trois sorties du projet", f"Semaine du {ctx.lundi:%d/%m}")
+        style.section("Les trois sorties du projet", f"Semaine du {ctx.lundi:%d/%m}" if ctx.lundi is not None else "Toutes les semaines")
     with bouton:
         st.write("")
-        st.download_button("Tout télécharger (.xlsx)", excel(ex, ctx.cle_cache, v, ctx.lundi), file_name="sorties_consolidation.xlsx", type="primary", width="stretch",
-                           mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        st.download_button("Tout télécharger (CSV)", tout_en_csv({"sortie1_profils": s1, "sortie2_camions": s2, "sortie2_materials": mat_f, "sortie3_savings": s3}),
+                           file_name="sorties_csv.zip", mime="application/zip", type="primary", width="stretch")
     t1, t2, t3 = st.tabs(["Sortie 1 · Profil par couple", "Sortie 2 · Camions", "Sortie 3 · Savings par couple"])
     with t1:
         ligne = xp.tableau_cliquable(s1, "s1", CONFIG_S1)
@@ -97,14 +101,13 @@ def page():
         with c1:
             st.download_button("Camions en CSV", csv(s2), file_name="sortie2_camions.csv", mime="text/csv", key="dl2")
         with c2:
-            st.download_button("Materials en CSV", csv(mat[mat["camion_id"].isin(s2["camion_id"])]), file_name="sortie2_materials.csv", mime="text/csv", key="dl2b")
+            st.download_button("Materials en CSV", csv(mat_f), file_name="sortie2_materials.csv", mime="text/csv", key="dl2b")
         with c3:
             xp.bouton_ouvrir((ligne["fournisseur"], ligne["usine"]) if ligne is not None else None, "ouvrir2")
         if ligne is not None:
             style.section(f"Materials du camion {ligne['camion_id']}")
             st.dataframe(mat[mat["camion_id"] == ligne["camion_id"]].drop(columns="camion_id"), hide_index=True, width="stretch", column_config=CONFIG_MAT)
     with t3:
-        a, o = s3["cout_actuel_semaine"].sum(), s3["cout_optimise_semaine"].sum()
         ligne = xp.tableau_cliquable(s3, "s3", CONFIG_S3)
         c1, c2 = st.columns([1, 3])
         with c1:

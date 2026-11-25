@@ -16,7 +16,6 @@ from src import sorties, tarifs
 PAGES = {}                      # nom -> st.Page, rempli par app.py (pour ouvrir un couple depuis un tableau)
 VERSIONS_NOMS = {"strict": "Stricte", "intermediaire": "Intermédiaire", "libre": "Libre"}
 JOURS_LETTRES = ["L", "M", "M", "J", "V"]
-TEINTES = ["#7B61C9", "#009E73", "#CC79A7", "#56B4E9", "#8C6D31", "#9B9B1F"]
 CLASSES_TYPE = {sc.TYPE_OPT: "opt", sc.TYPE_EXC: "exc", sc.TYPE_NON: "non", sc.TYPE_ACT: "act"}
 
 
@@ -65,15 +64,22 @@ def construire_contexte(ex, version, versions, nom_planning, lundi, usines, four
     contenu = garde(resultat.contenu)
     envois = garde(tarifs.envois_actuels(ex.planning_propre, moteur.grille))
     potentiel = garde(tarifs.potentiel_couples(tarifs.envois_actuels(ex.planning_propre, moteur.grille), moteur.grille))
-    controles = sc.verifier(ex, version)
-    non = [c for c in controles if not c["ok"]]
-    non += [{"nom": n} for n, ok, _ in ex.controles_independants[version] if not ok]
-    ctx = SimpleNamespace(ex=ex, moteur=moteur, version=version, versions=versions, resultat=resultat, nom_planning=nom_planning, lundi=pd.Timestamp(lundi),
+    ctx = SimpleNamespace(ex=ex, moteur=moteur, version=version, versions=versions, resultat=resultat, nom_planning=nom_planning, lundi=pd.Timestamp(lundi) if lundi is not None else None,
                           usines=list(usines), fournisseurs=list(fournisseurs), garde=garde, profils=profils, opt=opt, contenu=contenu, envois=envois,
-                          potentiel=potentiel, couples=couples, controles=controles, nb_non=len(non), cle_cache=cle_cache)
+                          potentiel=potentiel, couples=couples, cle_cache=cle_cache)
     ctx.avant, ctx.apres = float(opt["cout_actuel"].sum()), float(opt["cout_optimise"].sum())
     ctx.camions_avant, ctx.camions_apres = int(envois["nb_camions"].sum()), int(contenu["camion_id"].nunique())
     ctx.couples_couverts = len(opt)
+    # Indicateurs du haut : la semaine choisie (un camion compte la semaine ou il part), ou tout l'horizon
+    ctx.kpi_avant, ctx.kpi_apres, ctx.kpi_camions_avant, ctx.kpi_camions_apres = ctx.avant, ctx.apres, ctx.camions_avant, ctx.camions_apres
+    if ctx.lundi is not None:
+        act = garde(sc.cout_actuel_jours(ex))
+        act = act[act["date"].map(sc.lundi_de) == ctx.lundi]
+        cam, _ = sc.camions(ex, version, "apres")
+        cam = garde(cam[cam["type"] != sc.TYPE_NON])
+        cam = cam[cam["date_livraison"].map(sc.lundi_de) == ctx.lundi]
+        ctx.kpi_avant, ctx.kpi_apres = float(act["cout"].sum()), float(cam["prix"].sum())
+        ctx.kpi_camions_avant, ctx.kpi_camions_apres = int(act["camions"].sum()), len(cam)
     return ctx
 
 
@@ -82,15 +88,14 @@ def contexte():
 
 
 def kpis_haut(ctx):
-    """La ligne de 4 indicateurs du haut de chaque page, calculee sur la version, la semaine et les filtres du moment."""
-    gain = (ctx.avant - ctx.apres) / ctx.avant * 100 if ctx.avant else 0.0
-    controles = ("Contrôles", "OK" if ctx.nb_non == 0 else f"{ctx.nb_non} NON", "" if ctx.nb_non == 0 else "voir Contrôles",
-                 "vert" if ctx.nb_non == 0 else "rouge")
+    """La ligne d'indicateurs du haut de chaque page : version, semaine et filtres du moment."""
+    gain = (ctx.kpi_avant - ctx.kpi_apres) / ctx.kpi_avant * 100 if ctx.kpi_avant else 0.0
+    periode = f"semaine du {ctx.lundi:%d/%m}" if ctx.lundi is not None else "toutes les semaines"
     style.kpis_compacts([
-        ("Coût du transport", f"{nombre(ctx.avant)} → {eur(ctx.apres)}", f"<b>−{pct(gain)}</b>", "vert"),
-        ("Camions", f"{nombre(ctx.camions_avant)} → {nombre(ctx.camions_apres)}", f"−{nombre(ctx.camions_avant - ctx.camions_apres)}", ""),
+        (f"Coût · {periode}", f"{nombre(ctx.kpi_avant)} → {eur(ctx.kpi_apres)}", f"<b>−{pct(gain)}</b>", "vert"),
+        (f"Camions · {periode}", f"{nombre(ctx.kpi_camions_avant)} → {nombre(ctx.kpi_camions_apres)}",
+         f"−{nombre(ctx.kpi_camions_avant - ctx.kpi_camions_apres)}", ""),
         ("Couples couverts", f"{ctx.couples_couverts} / {len(ctx.couples)}", "", "gris"),
-        controles,
     ])
 
 
@@ -117,41 +122,33 @@ def pastilles_jours(jours_profil):
     return '<span class="pastilles-jours">' + "".join(f'<b class="{"on" if i in jours_profil else ""}">{JOURS_LETTRES[i]}</b>' for i in range(5)) + "</span>"
 
 
+def m3(x):
+    return f"{x:,.1f}".replace(",", "\u00a0").replace(".", ",") + "\u00a0m³"
+
+
+def tonnes(x):
+    """Poids court pour le calendrier : 2,7 t (ou 850 kg sous la tonne)."""
+    return kg(x) if x < 1000 else f"{x / 1000:,.1f}".replace(",", "\u00a0").replace(".", ",") + "\u00a0t"
+
+
 def _carte_camion(t, sel):
+    """Un camion sur une ligne : poids · volume · prix (la couleur du trait donne le type)."""
     cls = CLASSES_TYPE[t["type"]]
-    pt = f'<span class="pt" style="--pt:{TEINTES[t["teinte"]]}"></span>'
-    nom = "Aujourd'hui" if t["type"] == sc.TYPE_ACT else t["id"]
-    suffixe = f" ×{t['nb_camions']}" if t.get("nb_camions", 1) > 1 else ""
-    if pd.notna(t["poids"]):
-        poids = kg(t["poids"]) if t["poids"] < 1000 else f"{t['poids'] / 1000:,.1f}".replace(",", "\u00a0").replace(".", ",") + "\u00a0t"
-        rempl = min(float(t["remplissage_poids"]), 100) if pd.notna(t["remplissage_poids"]) else 0
-        jauge = f'<div class="jauge"><i style="width:{rempl:.0f}%"></i></div>'
-    else:
-        poids, jauge = "poids ?", '<div class="jauge"></div>'
-    besoins = (f'<div class="b">besoins du {e(sc.liste_dates(t["besoins"]))}</div>' if t["type"] in (sc.TYPE_OPT, sc.TYPE_EXC)
-               else ('<div class="b">non optimisé</div>' if t["type"] == sc.TYPE_NON else ""))
-    typ = "<span>exceptionnel</span>" if t["type"] == sc.TYPE_EXC else ""
-    return (f'<div class="cam {cls}{" sel" if sel else ""}"><div class="t"><span>{pt if t["type"] != sc.TYPE_ACT else ""}{e(nom)}{e(suffixe)}</span>{typ}</div>'
-            f'<div>{poids}</div>{jauge}<div class="prix">{eur(t["prix"])}</div>{besoins}</div>')
+    poids = tonnes(t["poids"]) if pd.notna(t["poids"]) else "poids ?"
+    volume = m3(t["volume"]) if pd.notna(t["volume"]) else "volume ?"
+    return f'<div class="cam {cls}">{poids} · {volume} · <b>{eur(t["prix"])}</b></div>'
 
 
-def calendrier_html(cal, selection=None):
-    """Le calendrier semaine x jour d'un couple : fond teinte = jour du profil ; camions en cartes ; besoins en lignes courtes."""
+def calendrier_html(cal, aujourdhui=False):
+    """Le calendrier semaine x jour d'un couple : fond teinte = jour du profil ; une carte par camion."""
     h = '<div class="cal"><div></div>' + "".join(f'<div class="ent">{j[:3]}</div>' for j in sc.JOURS)
     for s in cal["semaines"]:
-        lun = s["lundi"]
-        h += f'<div class="sem">{jj_mm(lun)}<small>semaine</small></div>'
+        h += f'<div class="sem">{jj_mm(s["lundi"])}</div>'
         for j in s["jours"]:
-            classes = "j" + (" prof" if j["profil"] else "") + (" ferme" if j["ferme"] else "")
-            contenu = "".join(_carte_camion(t, t["id"] == selection) for t in j["camions"])
-            for b in j["besoins"]:
-                t = cal["camions"][b["camion"]]
-                pt = f'<span class="pt" style="--pt:{TEINTES[t["teinte"]]}"></span>' if t["type"] != sc.TYPE_ACT else '<span class="pt"></span>'
-                depart = "le jour même" if b["parti_le"] == b["date"] else f"parti le {jj_mm(b['parti_le'])}"
-                cible = "livré" if t["type"] == sc.TYPE_ACT else e(b["camion"])
-                contenu += (f'<div class="bes{" sel" if b["camion"] == selection else ""}">{pt}{b["nb_lignes"]} ligne{"s" if b["nb_lignes"] > 1 else ""} '
-                            f'→ {cible} <small>({depart})</small></div>')
-            h += f'<div class="{classes}"><div class="d"><span>{j["date"]:%d/%m}</span>{"<i>profil</i>" if j["profil"] else ""}{"<i>fermé</i>" if j["ferme"] else ""}</div>{contenu}</div>'
+            teinte = bool(j["camions"]) if aujourdhui else j["profil"]          # aujourd'hui : pas de profil, on teinte les jours livres
+            classes = "j" + (" prof" if teinte else "") + (" ferme" if j["ferme"] else "")
+            contenu = "".join(_carte_camion(t, False) for t in j["camions"])
+            h += f'<div class="{classes}"><div class="d"><span>{j["date"].day}</span>{"<i>fermé</i>" if j["ferme"] else ""}</div>{contenu}</div>'
     return h + "</div>"
 
 
@@ -159,51 +156,16 @@ def jj_mm(d):
     return sc.jj_mm(d)
 
 
-def legende_html():
-    items = [("#0072B2", "camion optimisé"), ("#C0392B", "envoi exceptionnel"), ("#D9822B", "non optimisé (livré comme aujourd'hui)"),
-             ("#8895A7", "livraison actuelle"), ("#BBD7EE", "jour du profil")]
+def legende_html(aujourdhui=False):
+    if aujourdhui:
+        items = [("#8895A7", "livraison actuelle"), ("#D9822B", "hors optimisation"), ("#BBD7EE", "jour livré")]
+    else:
+        items = [("#0072B2", "camion optimisé"), ("#C0392B", "exceptionnel"), ("#D9822B", "hors optimisation"), ("#BBD7EE", "jour du profil")]
     return '<div class="legende">' + "".join(f'<span style="--c:{c}">{t}</span>' for c, t in items) + "</div>"
 
 
-def jauge(pourcentage, couleur="#0072B2"):
-    return f'<div class="jauge grande" style="--typ:{couleur}"><i style="width:{min(max(pourcentage, 0), 100):.0f}%"></i></div>'
-
-
-def panneau_camion(ctx, cle, cal, camion_id, etat):
-    """Le panneau d'un camion : besoins regroupes, materials, jauges poids et volume, prix, livraisons d'aujourd'hui remplacees."""
-    t = cal["camions"][camion_id]
-    m = ctx.moteur
-    with st.container(border=True):
-        nom = "Livraison actuelle" if t["type"] == sc.TYPE_ACT else f"Camion {t['id']}"
-        st.markdown(f'<div class="panneau-titre">{e(nom)} · {t["jour"]} {t["date"]:%d/%m/%Y}</div>'
-                    f'<div class="panneau-sous">{e(t["type"])} · {e(nom_couple(cle))}</div>', unsafe_allow_html=True)
-        if t["type"] == sc.TYPE_ACT:
-            lignes = sc.lignes_jour_actuel(ctx.ex, cle, t["date"])
-            det = pd.DataFrame({"material": lignes["material"], "quai": lignes["unloading_point"], "quantité": lignes["schedule_quantity"],
-                                "poids (kg)": lignes["weight"], "volume (m³)": lignes["volume"], "date du besoin": lignes["date"].dt.strftime("%d/%m/%Y"), "avance (j)": 0})
-        else:
-            det = sc.lignes_camion(ctx.ex, ctx.version, camion_id, etat)
-            det = pd.DataFrame({"material": det["material"], "quai": det["unloading_point"], "quantité": det["quantite"], "poids (kg)": det["poids"],
-                                "volume (m³)": det["volume"], "date du besoin": pd.to_datetime(det["date_besoin"]).dt.strftime("%d/%m/%Y"), "avance (j)": det["avance_jours"]})
-        poids = t["poids"]
-        chiffres = [("Prix", eur(t["prix"], 2)), ("Lignes", nombre(t["nb_lignes"])), ("Poids", kg(poids) if pd.notna(poids) else "inconnu"),
-                    ("Remplace", f"{len(t['besoins'])} livraison(s)")]
-        st.markdown('<div class="ligne-chiffres">' + "".join(f"<div>{a}<b>{e(b)}</b></div>" for a, b in chiffres) + "</div>", unsafe_allow_html=True)
-        if pd.notna(poids) and t["type"] != sc.TYPE_NON:
-            c1, c2 = st.columns(2)
-            with c1:
-                st.caption(f"Poids {pct(t['remplissage_poids'])}")
-                st.markdown(jauge(t["remplissage_poids"]), unsafe_allow_html=True)
-            with c2:
-                st.caption(f"Volume {pct(t['remplissage_volume'])}")
-                st.markdown(jauge(t["remplissage_volume"], "#009E73"), unsafe_allow_html=True)
-        st.dataframe(det, hide_index=True, width="stretch", height=min(320, 38 + 35 * len(det)),
-                     column_config={"quantité": st.column_config.NumberColumn(format="%.0f"), "poids (kg)": st.column_config.NumberColumn(format="%.1f"),
-                                    "volume (m³)": st.column_config.NumberColumn(format="%.3f"), "avance (j)": st.column_config.NumberColumn(format="%d")})
-
-
 def calendrier_complet(ctx, cle):
-    """Le coeur de la page « Détails des sorties » : vue, calendrier, clic sur un camion."""
+    """Le coeur de la page « Détails des sorties » : le choix de la vue, puis le calendrier."""
     c1, c2 = st.columns([3, 2])
     with c1:
         vue = st.segmented_control("Vue du calendrier", list(sc.ETATS), default="apres", format_func=sc.ETATS.get, key="vue_calendrier", label_visibility="collapsed")
@@ -213,11 +175,4 @@ def calendrier_complet(ctx, cle):
     with c2:
         if phrase and vue != "aujourdhui":
             st.caption(f"Lissage : {phrase}.")
-    selection = None
-    ordre = sorted(cal["camions"], key=lambda i: (cal["camions"][i]["date"], i))
-    if ordre and vue != "aujourdhui":                                   # aujourd'hui : une livraison par jour de besoin, deja lisible dans le calendrier
-        etiquette = lambda i: f"{i} · {cal['camions'][i]['date']:%d/%m}"
-        selection = st.pills("Ouvrir un camion", ordre, selection_mode="single", format_func=etiquette, key=f"camion_{cle[0]}_{cle[1]}_{ctx.version}_{vue}")
-    if selection:
-        panneau_camion(ctx, cle, cal, selection, vue)
-    st.html(legende_html() + calendrier_html(cal, selection))
+    st.html(legende_html(vue == "aujourdhui") + calendrier_html(cal, vue == "aujourdhui"))

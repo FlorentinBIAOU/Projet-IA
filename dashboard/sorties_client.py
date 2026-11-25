@@ -15,10 +15,10 @@ import pandas as pd
 from src import config
 
 JOURS = list(config.JOURS.values())                 # lundi ... vendredi
-TYPE_OPT, TYPE_EXC, TYPE_NON, TYPE_ACT = "Optimisé", "Envoi exceptionnel", "Non optimisé (livré comme aujourd'hui)", "Livraison actuelle"
+TYPE_OPT, TYPE_EXC, TYPE_NON, TYPE_ACT = "Optimisé", "Envoi exceptionnel", "Hors optimisation (données manquantes)", "Livraison actuelle"
 ETATS = {"aujourdhui": "Aujourd'hui", "avant": "Avant lissage", "apres": "Après lissage"}
 STATUT_OPT, STATUT_PART = "Optimisé", "Partiellement optimisé"
-STATUT_NON, STATUT_VIDE = "Non optimisé (information manquante)", "Sans besoin sur l'horizon"
+STATUT_NON, STATUT_VIDE = "Hors optimisation (données manquantes)", "Sans besoin sur l'horizon"
 
 
 # ---------------------------------------------------------------------------------------------- petits outils

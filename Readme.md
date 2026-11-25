@@ -45,19 +45,18 @@ streamlit run app.py        # ou ./lancer_app.sh  ->  http://localhost:8501
 ```
 
 Dans la colonne de gauche, on **dépose les fichiers d'entrée** (planning, distances, grille tarifaire ; sans fichier, ceux du client sont utilisés), on choisit
-la version du moteur (stricte, intermédiaire, libre, ou les trois pour les comparer) et on clique sur **Lancer le calcul**. Sous le bouton, on choisit la
-**semaine**, les **usines** et les **fournisseurs** à regarder (en mode « Comparer les trois », la version affichée) : ces choix valent pour toutes les pages.
-En haut de chaque page, quatre indicateurs : coût avant → après, camions avant → après, couples couverts / couples du fichier, contrôles (OK ou nombre de NON).
+la version du moteur (stricte, intermédiaire, libre, ou les trois pour les comparer) et on clique sur **Lancer le calcul**. On choisit ensuite la
+**semaine** (ou toutes), les **usines** et les **fournisseurs** à regarder (en mode « Comparer les trois », la version affichée) : ces choix valent pour toutes les pages.
+En haut de chaque page, trois indicateurs : coût avant → après et camions avant → après (pour la semaine choisie, ou tout l'horizon), couples couverts / couples du fichier.
 
 | Page | Contenu |
 |---|---|
-| **Sorties** | les trois sorties du projet (slides « Livrables attendus »). **Sortie 1** : un profil par couple (tous les couples du fichier, avec leur statut), **sortie 2** : le contenu de chaque camion et ses materials, **sortie 3** : le saving par couple (semaine choisie et horizon). Chaque tableau se télécharge en CSV, « Tout télécharger » donne un classeur Excel ; cliquer une ligne ouvre le couple dans la page suivante |
-| **Détails des sorties** | le cœur : on choisit un couple et on voit son calendrier semaine × jour. Fond bleu = jour du profil ; cartes = camions (bleu optimisé, rouge exceptionnel, orange non optimisé) avec poids, jauge, prix et besoins regroupés ; une ligne par jour de besoin (« 7 lignes → C00483, parti le 09/11 »). Trois vues : **aujourd'hui**, **avant lissage**, **après lissage** (avec une phrase si le lissage a déplacé le profil). Choisir un camion ouvre un panneau : materials, quai, avance, jauges poids et volume, livraisons d'aujourd'hui remplacées |
-| **Gains** | avant/après (coût, camions, livraisons, remplissage, camions par semaine), par usine (économies, calendrier d'une usine), lissage (part des livraisons par jour de la semaine), couples (réalisé contre potentiel, les 10 plus rentables) et « Pourquoi regrouper paie » (prix au kilo selon le poids) |
-| **Contrôles** | calculés à chaque calcul sur le fichier déposé : chaque ligne est dans un camion (par ligne, par material, par couple), aucun retard ni avance de plus de 7 jours, capacité, un couple par camion, jour autorisé par le profil, cohérence des trois sorties ; un NON affiche les cas en défaut. En dessous : contrôles du moteur, lignes non optimisées et leur raison, journal de préparation |
+| **Sorties** | les trois sorties du projet (slides « Livrables attendus »). **Sortie 1** : un profil par couple (tous les couples du fichier, avec leur statut), **sortie 2** : le contenu de chaque camion et ses materials, **sortie 3** : le saving par couple (semaine choisie et horizon). Chaque tableau se télécharge en CSV, « Tout télécharger » donne tous les CSV dans une archive .zip ; cliquer une ligne ouvre le couple dans la page suivante |
+| **Détails des sorties** | on choisit un couple et on voit son calendrier semaine × jour : fond bleu = jour du profil, un camion par ligne (poids / volume / prix), trait bleu = optimisé, rouge = exceptionnel, orange = hors optimisation (données manquantes). Trois vues : **aujourd'hui**, **avant lissage**, **après lissage** (avec une phrase si le lissage a déplacé le profil) |
+| **Gains** | avant/après (coût, camions, livraisons, remplissage, camions par semaine), par usine (économies, calendrier d'une usine), lissage (part des livraisons par jour de la semaine), couples (réalisé contre potentiel, les 10 plus rentables) |
 
 Le calcul des sorties est dans `dashboard/sorties_client.py` (fonctions pures, testées) ; l'affichage dans `dashboard/explorateur.py` et les pages `dashboard/page_*.py`.
-Le calendrier est en HTML/CSS (`st.html`) ; choisir un camion se fait par la liste de boutons au-dessus du calendrier.
+Le calendrier est en HTML/CSS (`st.html`).
 
 En cas de fichier à corriger (colonne manquante, doublons...), un message clair l'explique au lieu d'un résultat.
 
@@ -89,7 +88,7 @@ Plus on laisse de souplesse, moins ça coûte, mais moins le rythme annoncé aux
 ```
 main.py                 point d'entree en ligne de commande : python main.py
 app.py                  dashboard Streamlit : streamlit run app.py (ou ./lancer_app.sh)
-dashboard/              le dashboard : sorties_client.py (calcul des sorties), explorateur.py (calendrier), page_*.py (les 4 pages), style.py, graphiques.py
+dashboard/              le dashboard : sorties_client.py (calcul des sorties), explorateur.py (calendrier), page_*.py (les 3 pages), style.py, graphiques.py
 outils/                 regenerer_moteur.py : regenere src/moteur.py quand le moteur du notebook change
 Dockerfile.app          image de l'application (dashboard et programme) ; docker-compose.yml la lance
 src/
