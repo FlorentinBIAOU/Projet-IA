@@ -11,6 +11,78 @@ Sur les données du client (6 semaines, 171 couples optimisés, 4 252 lignes de 
 | Coût du périmètre | 143 321 € | **82 111 €** (−42,7 %) |
 | Camions | 1 604 | **652** |
 
+## Démarrage rapide : comment lancer le projet
+
+Dézippez le dossier, puis ouvrez un terminal **dans le dossier `Projet-IA`** (celui qui contient ce fichier).
+
+| Votre situation | Ce qu'il faut faire |
+|---|---|
+| Docker est installé (Docker Desktop sur Windows ou Mac, Docker sur Linux) | **Cas 1**, le plus simple : rien d'autre à installer |
+| Pas de Docker, mais Python 3.12 ou 3.13, sur Mac ou Linux | **Cas 2** |
+| Pas de Docker, mais Python 3.12 ou 3.13, sur Windows | **Cas 3** |
+| Seulement les résultats, sans interface | **Cas 4** |
+| Vérifier le projet avec les tests | **Cas 5** |
+
+### Cas 1 : avec Docker
+```bash
+docker compose up
+```
+Ouvrez ensuite http://localhost:8501 dans le navigateur. La première fois, la construction de l'image prend environ une minute.
+Pour arrêter : `Ctrl + C` dans le terminal, puis `docker compose down`.
+
+### Cas 2 : avec Python, sur Mac ou Linux
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+Le tableau de bord s'ouvre dans le navigateur (sinon : http://localhost:8501). Pour arrêter : `Ctrl + C`.
+Les fois suivantes, seules les commandes `source .venv/bin/activate` et `streamlit run app.py` sont nécessaires.
+
+### Cas 3 : avec Python, sur Windows (PowerShell)
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+Si Windows refuse d'activer l'environnement, lancez d'abord `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, puis recommencez la ligne `activate`.
+
+### Dans le tableau de bord
+1. Déposez les trois fichiers fournis dans le dossier :
+   le planning `data/released_schedule.csv`, les distances `data/distances.csv` et la grille tarifaire `docs/rate_sheet.pdf`.
+2. Choisissez la version : **stricte** (recommandée), intermédiaire, libre, ou les trois pour les comparer.
+3. Cliquez sur **Lancer le calcul** (quelques secondes).
+4. Parcourez les pages **Sorties** (profil par couple, contenu des camions, économies, à télécharger), **Détails des sorties** (le calendrier d'un couple) et **Gains**.
+
+### Cas 4 : le programme seul, sans interface
+Avec Python (environnement activé comme au cas 2 ou 3) :
+```bash
+python main.py --version toutes
+```
+Avec Docker :
+```bash
+docker compose --profile calcul run --rm calcul
+```
+Les résultats sont écrits dans le dossier `resultats/` : `profils_couples.csv` (sortie 1), `contenu_camions.csv` (sortie 2), `resume_economies.csv` et `comparaison_versions.csv`.
+
+### Cas 5 : lancer les tests
+Avec Python (environnement activé comme au cas 2 ou 3) :
+```bash
+pytest
+```
+131 tests, environ 2 minutes.
+
+### Les notebooks des jalons 1 à 4
+Avec Python : `jupyter lab`, puis ouvrir le dossier `notebooks/`.
+Avec Docker : `docker compose --profile notebooks up`, puis http://localhost:8888.
+
+### En cas de problème
+- **Le port 8501 est déjà utilisé** : `streamlit run app.py --server.port 8502`, puis http://localhost:8502.
+- **`python` ou `python3` introuvable** : installer Python 3.12 ou 3.13 depuis python.org (sur Windows, cocher « Add Python to PATH »).
+- **Docker ne démarre pas** : vérifier que Docker Desktop est bien lancé avant `docker compose up`.
+
 ## Lancer le programme
 
 ```bash
@@ -136,38 +208,6 @@ Celles des notebooks :
 Une note technique sur les modules : pour retrouver exactement les fichiers des notebooks, le moteur lit la grille de prix telle qu'elle est enregistrée dans
 `grille_prix.csv` (voir `preparation.relire_grille`). Les prix en mémoire diffèrent en effet de 10⁻¹⁶ sur quelques cases, ce qui peut départager autrement
 deux profils de même coût.
-
-## Installer le projet
-
-```bash
-git clone https://github.com/FlorentinBIAOU/Projet-IA.git
-cd Projet-IA
-```
-
-**Option 1 — Python**
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python main.py        # lancer le programme (resultats dans resultats/)
-jupyter lab           # ou explorer les notebooks
-```
-
-**Option 2 : Docker (l'application)**
-```bash
-docker build -t projet-ia .
-docker run --rm -p 127.0.0.1:8501:8501 projet-ia
-```
-Puis ouvrir http://localhost:8501.
-
-**Option 3 — Docker Compose (l'application)**
-```bash
-docker compose up                                  # le dashboard sur http://localhost:8501
-docker compose --profile calcul run --rm calcul    # le programme en ligne de commande, les trois versions (résultats dans ./resultats)
-docker compose --profile notebooks up              # JupyterLab sur http://localhost:8888
-```
-L'image de l'application est décrite dans `Dockerfile`, celle de JupyterLab dans `Dockerfile.notebooks`.
-
 
 ## Règles
 - Ne jamais modifier `data/` à la main.
